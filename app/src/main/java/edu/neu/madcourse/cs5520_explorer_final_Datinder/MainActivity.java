@@ -1,4 +1,4 @@
-package com.example.cs5520_explorer_final_datingapp;
+package edu.neu.madcourse.cs5520_explorer_final_Datinder;
 
 import androidx.appcompat.app.AppCompatActivity;
 

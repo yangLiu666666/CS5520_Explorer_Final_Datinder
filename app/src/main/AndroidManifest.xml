@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.cs5520_explorer_final_datingapp">
+    package="edu.neu.madcourse.cs5520_explorer_final_Datinder">
 
     <application
         android:allowBackup="true"
