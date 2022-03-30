@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CS5520_Explorer_Final_DatingApp">
         <activity
+            android:name=".SigninActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateAccountActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
