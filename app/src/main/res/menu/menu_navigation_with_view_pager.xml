@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--related doc: https://developer.android.com/guide/topics/ui/menus-->
+<!--downgraded gradle google material version to show icons-->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/ic_profile"
+        android:checked="true"
+        android:icon="@drawable/ic_profile"
+        android:title="" />
+
+    <item
+        android:id="@+id/ic_main"
+        android:icon="@drawable/ic_main_fire"
+        android:title="" />
+
+    <item
+        android:id="@+id/ic_matched"
+        android:icon="@drawable/ic_matched"
+        android:title="" />
+
+
+</menu>

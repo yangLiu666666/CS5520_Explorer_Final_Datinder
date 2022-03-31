@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">CS5520_Explorer_Final_DatingApp</string>
+    <string name="menu_message">Message</string>
+    <string name="menu_discover">Discover</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_discover">Discover</string>
+    <string name="menu_message">Message</string>
 </resources>

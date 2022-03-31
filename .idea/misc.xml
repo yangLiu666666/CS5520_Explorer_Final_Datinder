@@ -3,7 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.10648148148148148" />
+        <entry key="../../../../layout/custom_preview.xml" value="0.3359375" />
+        <entry key="app/src/main/res/drawable-v24/white_grey_border_bottom.xml" value="0.1425" />
+        <entry key="app/src/main/res/drawable/ic_icon_main_fire.xml" value="0.1425" />
+        <entry key="app/src/main/res/drawable/ic_icon_profile.xml" value="0.1425" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1425" />
+        <entry key="app/src/main/res/drawable/ic_main_fire.xml" value="0.246" />
+        <entry key="app/src/main/res/drawable/ic_matched.xml" value="0.1425" />
+        <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.246" />
+        <entry key="app/src/main/res/layout/activity_create_account.xml" value="0.3170289855072464" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.18414387031408308" />
+        <entry key="app/src/main/res/layout/activity_signin.xml" value="0.18414387031408308" />
+        <entry key="app/src/main/res/layout/layout_top_navigation_view.xml" value="0.39349798726214225" />
+        <entry key="app/src/main/res/layout/menu_navigation_with_view_pager.xml" value="0.3578316144547081" />
+        <entry key="app/src/main/res/layout/top_navigation_bar.xml" value="0.3556496076187706" />
+        <entry key="app/src/main/res/menu/menu_navigation_with_view_pager.xml" value="0.3234375" />
+        <entry key="app/src/main/res/menu/test.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/top_navigation_toolbar.xml" value="0.41510416666666666" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.17" />
       </map>
     </option>
