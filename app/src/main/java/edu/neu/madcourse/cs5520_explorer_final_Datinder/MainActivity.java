@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button = findViewById(R.id.sign_in);
         button.setOnClickListener(this);
 
-        setUpTopNavigationBar();
+//        setUpTopNavigationBar();
 
     }
 
@@ -47,16 +47,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * set up top navigation bar view
      */
-    private void setUpTopNavigationBar() {
-        BottomNavigationViewEx tvNB = findViewById(R.id.topNavBar);
-        tvNB.enableAnimation(false);
-        tvNB.enableShiftingMode(false);
-        tvNB.enableItemShiftingMode(false);
-        TopNavigationBar.setupTopBar(MainActivity.this, tvNB);
-        Menu menu = tvNB.getMenu();
-        MenuItem menuItem = menu.getItem(1);
-        menuItem.setChecked(true);
-    }
+//    private void setUpTopNavigationBar() {
+//        BottomNavigationViewEx tvNB = findViewById(R.id.topNavBar);
+//        tvNB.enableAnimation(false);
+//        tvNB.enableShiftingMode(false);
+//        tvNB.enableItemShiftingMode(false);
+//        TopNavigationBar.setupTopBar(MainActivity.this, tvNB);
+//        Menu menu = tvNB.getMenu();
+//        MenuItem menuItem = menu.getItem(1);
+//        menuItem.setChecked(true);
+//    }
 }
 
 
