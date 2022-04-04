@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -48,10 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * set up top navigation bar view
      */
 //    private void setUpTopNavigationBar() {
-//        BottomNavigationViewEx tvNB = findViewById(R.id.topNavBar);
-//        tvNB.enableAnimation(false);
-//        tvNB.enableShiftingMode(false);
-//        tvNB.enableItemShiftingMode(false);
+//        BottomNavigationView tvNB = findViewById(R.id.topNavBar);
+//        TopNavigationBar.logTopNav(tvNB);
 //        TopNavigationBar.setupTopBar(MainActivity.this, tvNB);
 //        Menu menu = tvNB.getMenu();
 //        MenuItem menuItem = menu.getItem(1);

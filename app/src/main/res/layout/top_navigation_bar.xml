@@ -11,13 +11,15 @@
         android:layout_height="70dp"
         android:background="@color/white">
 
-        <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/topNavBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:background="@color/white"
-            android:layout_gravity="bottom"
-            app:itemIconTint="@color/iconGrey"
+            app:itemIconSize="30dp"
+            app:itemIconTint="@drawable/top_navigation_bar_ic_selector"
+            app:labelVisibilityMode="unlabeled"
             app:menu="@menu/menu_navigation_with_view_pager" />
 
     </LinearLayout>

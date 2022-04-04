@@ -1,8 +1,9 @@
 package edu.neu.madcourse.cs5520_explorer_final_Datinder;
 
 import android.content.Context;
+import android.util.Log;
 
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 /**
  * This class serves for transferring to three different activities when
@@ -10,7 +11,13 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
  * utilized an open resource/library for modified and enhanced android navigation view on github
  */
 public class TopNavigationBar {
-    public static void setupTopBar(final Context context, BottomNavigationViewEx topNavigationView) {
+
+    public static void logTopNav(BottomNavigationView tv) {
+        Log.d("TOPNAVBAR", "log navi bar");
+    }
+
+
+    public static void setupTopBar(final Context context, BottomNavigationView topNavigationView) {
         topNavigationView.setOnNavigationItemSelectedListener(item -> {
             // Handle item selection
             switch (item.getItemId()) {
