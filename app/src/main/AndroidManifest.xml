@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CS5520_Explorer_Final_DatingApp">
         <activity
+            android:name=".MatchScreenActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterQuestionActivity"
             android:exported="false" />
         <activity
