@@ -83,7 +83,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 //        email.setText("");
 
         //check if user fill all the fields before sending data to firebase
-        if (userInfo.isEmpty()) {
+        if (userInfo.isEmpty() || phoneInfo.isEmpty() || emailInfo.isEmpty()|| passwordInfo.isEmpty()) {
             Toast.makeText(CreateAccountActivity.this, "Please fill all fields.", Toast.LENGTH_SHORT).show();
             return;
         } else if (!emailInfo.endsWith(".edu")) {
