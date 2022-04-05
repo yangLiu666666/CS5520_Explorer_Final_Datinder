@@ -43,6 +43,9 @@ dependencies {
 
     //import github lib
     implementation 'com.github.ittianyu:BottomNavigationViewEx:2.0.4'
+    //add circle image view in profile
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+    
     implementation 'com.google.firebase:firebase-database:20.0.4'
     implementation 'com.google.firebase:firebase-messaging:23.0.2'
 
