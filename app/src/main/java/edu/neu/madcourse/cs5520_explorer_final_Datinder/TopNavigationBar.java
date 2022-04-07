@@ -1,9 +1,12 @@
 package edu.neu.madcourse.cs5520_explorer_final_Datinder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import edu.neu.madcourse.cs5520_explorer_final_Datinder.Profile.ProfileActivity;
 
 /**
  * This class serves for transferring to three different activities when
@@ -22,7 +25,8 @@ public class TopNavigationBar {
             // Handle item selection
             switch (item.getItemId()) {
                 case R.id.ic_profile:
-                    //TODO: intent to profile activity
+                    Intent intent1 = new Intent(context, ProfileActivity.class);
+                    context.startActivity(intent1);
                     break;
 
                 case R.id.ic_main:
