@@ -39,7 +39,7 @@
                         android:id="@+id/sign_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
+                        android:background="@color/devider"
                         android:hint="Please enter your school email"
                         android:textSize="18sp"
                         android:textStyle="italic"
