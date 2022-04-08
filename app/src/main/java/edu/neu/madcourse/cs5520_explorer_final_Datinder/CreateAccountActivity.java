@@ -3,132 +3,157 @@ package edu.neu.madcourse.cs5520_explorer_final_Datinder;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.HashMap;
+import java.util.Map;
 
 public class CreateAccountActivity extends AppCompatActivity {
-    private static final String TAG = CreateAccountActivity.class.getSimpleName();
     private Button createAccount;
-    private EditText email, password, name, phone;
-    private TextView signIn;
-    private DatabaseReference database;
-    private String deviceToken, userInfo, passwordInfo, emailInfo, phoneInfo;
-
+    private ProgressBar spinner;
+    private EditText email, password, name;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
+    private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    private static final String TAG = "RegisterActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
-        name = findViewById(R.id.create_account_name);
-        password = findViewById(R.id.create_account_password);
-        email = findViewById(R.id.create_account_email);
-        phone = findViewById(R.id.create_account_phone);
-        createAccount = findViewById(R.id.create_account_button);
-        signIn = findViewById(R.id.transfer_sign_in);
+        spinner = (ProgressBar)findViewById(R.id.create_bar);
+        spinner.setVisibility(View.GONE);
 
-        signIn.setOnClickListener(new View.OnClickListener() {
+        TextView existAccount = (TextView) findViewById(R.id.create_exist_account);
+
+        mAuth = FirebaseAuth.getInstance();
+        firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                spinner.setVisibility(View.VISIBLE);
+                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user !=null){
+                    Intent intent = new Intent(CreateAccountActivity.this, MatchScreenActivity.class);
+                    startActivity(intent);
+                    finish();
+                    spinner.setVisibility(View.GONE);
+                    return;
+                }
+                spinner.setVisibility(View.GONE);
+
+            }
+        };
+
+        existAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CreateAccountActivity.this, SigninActivity.class));
+                Intent btnClick = new Intent(CreateAccountActivity.this, SigninActivity.class);
+                startActivity(btnClick);
+                finish();
+                return;
             }
         });
 
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                        Toast.makeText(CreateAccountActivity.this, "Fetching FCM registration token failed", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    // Get new FCM registration token
-                    deviceToken = task.getResult();
-                    Toast.makeText(CreateAccountActivity.this, "token: " + deviceToken, Toast.LENGTH_LONG).show();
-                    database = FirebaseDatabase.getInstance().getReference();
+        createAccount = (Button) findViewById(R.id.create_register);
+        email = (EditText) findViewById(R.id.create_email);
+        password = (EditText) findViewById(R.id.create_password);
+        name = (EditText) findViewById(R.id.create_name);
 
-                });
+        createAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                spinner.setVisibility(View.VISIBLE);
+                final String emailInfo = email.getText().toString();
+                final String passwordInfo = password.getText().toString();
+                final String nameInfo = name.getText().toString();
 
+                if(checkInputs(emailInfo, nameInfo, passwordInfo)){
+                    mAuth.createUserWithEmailAndPassword(emailInfo,passwordInfo).addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+//                                Toast.makeText(CreateAccountActivity.this, "Registration successfully.", Toast.LENGTH_LONG).show();
+//                                String userId = mAuth.getCurrentUser().getUid();
+//                                DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+//                                Log.d("DB_debug", FirebaseDatabase.getInstance().getReference().getDatabase() + "");
+//                                Map userInfo = new HashMap<>();
+//                                userInfo.put("name", name);
+//                                userInfo.put("profileImageUrl", "default");
+                                // currentUserDb.updateChildren(userInfo);
+
+                                //clear the fields
+                                email.setText("");
+                                name.setText("");
+                                password.setText("");
+                                Intent btnClick = new Intent(CreateAccountActivity.this, MainActivity.class);
+                                startActivity(btnClick);
+                                finish();
+                                return;
+                            } else {
+                                Toast.makeText(CreateAccountActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+                    });
+                }
+            }
+        });
     }
 
-
-    public void createAccount(View view) {
-        if (deviceToken == null) {
-            Toast.makeText(CreateAccountActivity.this, "Get device token failed", Toast.LENGTH_SHORT).show();
-            return;
+    private boolean checkInputs(String email, String username, String password) {
+        Log.d(TAG, "checkInputs: checking inputs for null values.");
+        if (email.isEmpty() || username.isEmpty()|| password.isEmpty()) {
+            Toast.makeText(CreateAccountActivity.this, "Please file out all fields", Toast.LENGTH_SHORT).show();
+            return false;
         }
 
-        // get data from EditTexts
-        userInfo = name.getText().toString().trim();
-        passwordInfo = password.getText().toString().trim();
-        emailInfo = email.getText().toString().trim();
-        phoneInfo = phone.getText().toString().trim();
+        // Below code checks if the email id is valid or not.
+        if (!email.matches(emailPattern) && !email.endsWith(".edu")) {
+            Toast.makeText(CreateAccountActivity.this, "Please enter a valid school email", Toast.LENGTH_SHORT).show();
+            return false;
 
-//
-//        //reset EditText when click
-//        name.setText("");
-//        password.setText("");
-//        email.setText("");
-
-        //check if user fill all the fields before sending data to firebase
-        if (userInfo.isEmpty() || phoneInfo.isEmpty() || emailInfo.isEmpty()|| passwordInfo.isEmpty()) {
-            Toast.makeText(CreateAccountActivity.this, "Please fill all fields.", Toast.LENGTH_SHORT).show();
-            return;
-        } else if (!emailInfo.endsWith(".edu")) {
-            Toast.makeText(CreateAccountActivity.this, "Please enter your edu email.", Toast.LENGTH_SHORT).show();
-            return;
-        } else {
-
-            database.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    // check phone is not register before
-                    if (snapshot.hasChild(phoneInfo)) {
-                        Toast.makeText(CreateAccountActivity.this, "Phone is already registered", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        //send data to firebase realtime database
-                        // we are using phone as unique identity of every user
-                        // so all other details of users comes under email
-
-                        database.child("users").child(phoneInfo).child("name").setValue(userInfo);
-                        database.child("users").child(phoneInfo).child("password").setValue(passwordInfo);
-                        database.child("users").child(phoneInfo).child("email").setValue(emailInfo);
-                        database.child("users").child(phoneInfo).child("token").setValue(deviceToken);
-
-                        // show a success message then finish the activity
-                        Toast.makeText(CreateAccountActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-
-                    Intent intent = new Intent(CreateAccountActivity.this, RegisterQuestionActivity.class);
-                    intent.putExtra("email", emailInfo);
-                    intent.putExtra("password", passwordInfo);
-                    intent.putExtra("users", phoneInfo);
-                    intent.putExtra("name", userInfo);
-                    intent.putExtra("token", deviceToken);
-                    Log.d("TOKEN", deviceToken);
-                    name.setText("");
-                    startActivity(intent);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
         }
+
+        if(password.length() < 6){
+            Toast.makeText(CreateAccountActivity.this, "The password contains at least six characters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(firebaseAuthStateListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(firebaseAuthStateListener);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent btnClick = new Intent(CreateAccountActivity.this, MainActivity.class);
+        startActivity(btnClick);
+        finish();
     }
 }

@@ -13,5 +13,6 @@
     <color name="colorPrimary">#e87aab</color>
     <color name="colorPrimaryDark">#99FF4081</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="error_stroke_color">#F27474</color>
 
 </resources>
