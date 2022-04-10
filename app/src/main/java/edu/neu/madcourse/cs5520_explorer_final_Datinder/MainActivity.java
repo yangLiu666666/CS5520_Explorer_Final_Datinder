@@ -4,58 +4,78 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private Button button;
-    private Intent intent;
+public class MainActivity extends AppCompatActivity {
+    public String TAG = "MainActivity";
+    private Button signIn, createAccount;
+    private FirebaseAuth mAuth;
+    private ProgressBar spinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAuth = FirebaseAuth.getInstance();
+        spinner = findViewById(R.id.pBar);
+        spinner.setVisibility(View.GONE);
+        if(mAuth != null){
+            final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user !=null){  //uncomment for production
+                spinner.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(MainActivity.this, MatchScreenActivity.class);
+                startActivity(intent);
+                finish();
+                spinner.setVisibility(View.GONE);
+                return;
+            }
+            else {
+                Log.d(TAG, "user is null");
+            }
+        }
 
-        button = findViewById(R.id.create_account);
-        button.setOnClickListener(this);
-        button = findViewById(R.id.sign_in);
-        button.setOnClickListener(this);
+        signIn = findViewById(R.id.main_sign_in);
+        createAccount = findViewById(R.id.main_create_account);
 
-//        setUpTopNavigationBar();
+        signIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                spinner.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(MainActivity.this, SigninActivity.class);
+                startActivity(intent);
+                finish();
+                spinner.setVisibility(View.GONE);
+                return;
+            }
+        });
 
+
+        createAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                spinner.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(MainActivity.this, CreateAccountActivity.class);
+                startActivity(intent);
+                finish();
+                spinner.setVisibility(View.GONE);
+                return;
+            }
+        });
     }
-
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.create_account:
-                intent = new Intent(MainActivity.this, CreateAccountActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.sign_in:
-                intent = new Intent(MainActivity.this, SigninActivity.class);
-                startActivity(intent);
-                break;
-        }
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        return;
     }
-
-    /**
-     * set up top navigation bar view
-     */
-//    private void setUpTopNavigationBar() {
-//        BottomNavigationView tvNB = findViewById(R.id.topNavBar);
-//        TopNavigationBar.logTopNav(tvNB);
-//        TopNavigationBar.setupTopBar(MainActivity.this, tvNB);
-//        Menu menu = tvNB.getMenu();
-//        MenuItem menuItem = menu.getItem(1);
-//        menuItem.setChecked(true);
-//    }
 }
 
 

@@ -6,4 +6,166 @@
     android:layout_height="match_parent"
     tools:context=".RegisterQuestionActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="25dp"
+                android:paddingTop="70dp"
+                android:paddingRight="25dp">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+                    <!--                    https://stackoverflow.com/questions/61753265/circle-image-view-not-showing-up-->
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/user_image"
+                        android:layout_width="100sp"
+                        android:layout_height="100sp"
+                        android:layout_marginBottom="20sp"
+                        android:background="@drawable/monkey"
+                        android:src="@drawable/default_man" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+
+                <!--                <TextView-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:background="@color/light_grey"-->
+                <!--                    android:padding="5dp"-->
+                <!--                    android:text="About You"-->
+                <!--                    android:textSize="18dp"-->
+                <!--                    android:textStyle="bold|italic" />-->
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="bottom"
+                    android:id="@+id/profile_name"
+                    android:padding="5dp"/>
+                <!--                <View-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="1dp"-->
+                <!--                    android:layout_marginTop="2dp"-->
+                <!--                    android:background="@color/grey" />-->
+                <!--                <EditText-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="40dp"-->
+                <!--                    android:background="@android:color/transparent"-->
+                <!--                    android:gravity="bottom"-->
+                <!--                    android:id="@+id/birth_date"-->
+                <!--                    android:hint="Date of birth"-->
+                <!--                    android:padding="5dp"/>-->
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/light_grey"
+                    android:padding="5dp"
+                    android:text="Which gender best describes you?"
+                    android:textSize="18dp"
+                    android:textStyle="bold|italic"/>
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/gender_radio_group">
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Male"
+                        android:textSize="14dp"
+                        android:textStyle="italic"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Female"
+                        android:textSize="14dp"
+                        android:textStyle="italic"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Non-binary"
+                        android:textSize="14dp"
+                        android:textStyle="italic"/>
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/light_grey"
+                    android:padding="5dp"
+                    android:text="Who do you want to date?"
+                    android:textSize="18dp"
+                    android:textStyle="bold|italic" />
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/date_gender">
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Male"
+                        android:textSize="14dp"
+                        android:textStyle="italic"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Female"
+                        android:textSize="14dp"
+                        android:textStyle="italic"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Non-binary"
+                        android:textSize="14dp"
+                        android:textStyle="italic"/>
+                </RadioGroup>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/error_stroke_color"
+                    android:padding="6dp"
+                    android:text="Confirm"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:textStyle="bold|italic" />
+
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+    <ProgressBar
+        android:id="@+id/profile_bar"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:indeterminateTint="@color/error_stroke_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
