@@ -30,7 +30,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private EditText email, password, name;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
-    private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+edu+";
     private static final String TAG = "RegisterActivity";
 
     @Override
@@ -89,20 +89,20 @@ public class CreateAccountActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-//                                Toast.makeText(CreateAccountActivity.this, "Registration successfully.", Toast.LENGTH_LONG).show();
-//                                String userId = mAuth.getCurrentUser().getUid();
-//                                DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
-//                                Log.d("DB_debug", FirebaseDatabase.getInstance().getReference().getDatabase() + "");
-//                                Map userInfo = new HashMap<>();
-//                                userInfo.put("name", name);
-//                                userInfo.put("profileImageUrl", "default");
-                                // currentUserDb.updateChildren(userInfo);
+                                Toast.makeText(CreateAccountActivity.this, "Registration successfully.", Toast.LENGTH_LONG).show();
+                                String userId = mAuth.getCurrentUser().getUid();
+                                DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+                                Log.d("DB_debug", FirebaseDatabase.getInstance().getReference().getDatabase() + "");
+                                Map userInfo = new HashMap<>();
+                                userInfo.put("name", nameInfo);
+                                userInfo.put("userImageUrl", "default");
+                                currentUserDb.updateChildren(userInfo);
 
                                 //clear the fields
                                 email.setText("");
                                 name.setText("");
                                 password.setText("");
-                                Intent btnClick = new Intent(CreateAccountActivity.this, MainActivity.class);
+                                Intent btnClick = new Intent(CreateAccountActivity.this, RegisterQuestionActivity.class);
                                 startActivity(btnClick);
                                 finish();
                                 return;
@@ -125,7 +125,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
 
         // Below code checks if the email id is valid or not.
-        if (!email.matches(emailPattern) && !email.endsWith(".edu")) {
+        if (!email.matches(emailPattern)) {
             Toast.makeText(CreateAccountActivity.this, "Please enter a valid school email", Toast.LENGTH_SHORT).show();
             return false;
 

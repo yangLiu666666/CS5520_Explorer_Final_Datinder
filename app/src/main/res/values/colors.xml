@@ -15,5 +15,6 @@
     <color name="colorAccent">#D81B60</color>
     <color name="error_stroke_color">#F27474</color>
     <color name="devider">#ebebeb</color>
+    <color name="light_grey">#eeeeee</color>
 
 </resources>

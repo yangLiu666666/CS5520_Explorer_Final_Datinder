@@ -1,14 +1,260 @@
 package edu.neu.madcourse.cs5520_explorer_final_Datinder;
 
-import androidx.appcompat.app.AppCompatActivity;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.UploadTask;
 
 public class RegisterQuestionActivity extends AppCompatActivity {
+    private EditText userName;
+    private ProgressBar spinner;
+    private Button confirm;
+    //private ImageButton back;
+    private ImageView userImage;
+    private FirebaseAuth mAuth;
+    private DatabaseReference userDatabase;
+    private RadioGroup gender, likeGender;
+
+    private String userId, nameInfo, userImageUrl, genderInfo, likeGenderInfo;
+    private Uri resultUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_question);
+
+        spinner = findViewById(R.id.profile_bar);
+        spinner.setVisibility(View.GONE);
+        //back = findViewById(R.id.settingsBack);
+        userName = findViewById(R.id.profile_name);
+        userImage = findViewById(R.id.user_image);
+        confirm = findViewById(R.id.confirm);
+        gender = findViewById(R.id.gender_radio_group);
+        likeGender = findViewById(R.id.date_gender);
+
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth != null && mAuth.getCurrentUser()!= null)
+            userId = mAuth.getCurrentUser().getUid();
+        else {
+            finish();
+        }
+
+        userDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+
+        getUserInfo();
+
+        userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!checkPermission()) {  // this line checks permission everytime you access this activity
+                    Toast.makeText(getApplicationContext(), "Please allow access to continue!", Toast.LENGTH_SHORT).show();
+                    requestPermission();
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType("image/*");
+                    startActivityForResult(intent, 1);
+                }
+
+            }
+        });
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveUserInformation();
+                Intent intent = new Intent(RegisterQuestionActivity.this, MatchScreenActivity.class);
+                startActivity(intent);
+                finish();
+                return;
+            }
+        });
+
+//        back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                spinner.setVisibility(View.VISIBLE);
+//                Intent intent = new Intent(RegisterQuestionActivity.this, MatchScreenActivity.class);
+//                startActivity(intent);
+//                finish();
+//                spinner.setVisibility(View.GONE);
+//                return;
+//            }
+//        });
+//
+//        //toolbar
+//        Toolbar toolbar = findViewById(R.id.settingsToolbar);
+//        setSupportActionBar(toolbar);
+
     }
+
+//    //shows options for menu toolbar
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.settings_menu, menu);
+//        return true;
+//    }
+
+    public boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE);
+        return result == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{READ_EXTERNAL_STORAGE}, 100);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, 1);
+            } else {
+                Toast.makeText(getApplicationContext(), "Please allow access to continue!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void getUserInfo() {
+        userDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0){
+                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                    if(map.get("name")!=null){
+                        nameInfo = map.get("name").toString();
+                        userName.setText(nameInfo);
+                    }
+
+                    if(map.get("gender")!=null){
+                        genderInfo = map.get("gender").toString();
+                    }
+
+                    if(map.get("likeGender")!=null){
+                        likeGenderInfo = map.get("likeGender").toString();
+                    }
+
+
+                    //https://guides.codepath.com/android/Displaying-Images-with-the-Glide-Library
+
+                    //Glide.clear(userImage);
+                    if(map.get("userImageUrl")!=null){
+                        userImageUrl = map.get("userImageUrl").toString();
+                        switch(userImageUrl){
+                            case "default":
+                                Glide.with(getApplication()).load(R.drawable.default_man).into(userImage);
+                                break;
+                            default:
+                                Glide.with(getApplication()).load(userImageUrl).into(userImage);
+                                break;
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void saveUserInformation() {
+        nameInfo = userName.getText().toString();
+
+        Map userInfo = new HashMap();
+        userInfo.put("name", nameInfo);
+
+        userDatabase.updateChildren(userInfo);
+        if(resultUri != null){
+            StorageReference filepath = FirebaseStorage.getInstance().getReference().child("profileImages").child(userId);
+            Bitmap bitmap = null;
+
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getApplication().getContentResolver(), resultUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream);
+            byte[] data = stream.toByteArray();
+            UploadTask uploadTask = filepath.putBytes(data);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    finish();
+                }
+            });
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
+                    while(!uri.isComplete());
+                    Uri downloadUrl = uri.getResult();
+                    Map userInfo = new HashMap();
+                    userInfo.put("userImageUrl", downloadUrl.toString());
+                    userDatabase.updateChildren(userInfo);
+
+                    finish();
+                    return;
+                }
+            });
+        }else{
+            finish();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode == Activity.RESULT_OK){
+            final Uri imageUri = data.getData();
+            resultUri = imageUri;
+            userImage.setImageURI(resultUri);
+        }
+    }
+
 }
