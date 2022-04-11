@@ -48,7 +48,7 @@ public class SigninActivity extends AppCompatActivity {
                 if(emailInfo.isEmpty()){
                     Toast.makeText(SigninActivity.this, "Please enter your email", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent(SigninActivity.this, Swip.class);
+                    Intent intent = new Intent(SigninActivity.this, MatchScreenActivity.class);
                     startActivity(intent);
                     finish();
                     return;
