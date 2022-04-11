@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if (user !=null){  //uncomment for production
                 spinner.setVisibility(View.VISIBLE);
-                Intent intent = new Intent(MainActivity.this, MatchScreenActivity.class);
+                Intent intent = new Intent(MainActivity.this, Swip.class);
                 startActivity(intent);
                 finish();
                 spinner.setVisibility(View.GONE);
