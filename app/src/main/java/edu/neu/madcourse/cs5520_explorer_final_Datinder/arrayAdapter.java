@@ -79,7 +79,8 @@ public class arrayAdapter extends ArrayAdapter<Card>{
                 Glide.with(convertView.getContext()).load(R.drawable.man).into(image);
                 break;
             default:
-                Glide.clear(image);
+                Glide.with(image).clear(image);
+
                 Glide.with(convertView.getContext()).load(card_item.getProfileImageUrl()).into(image);
                 break;
         }

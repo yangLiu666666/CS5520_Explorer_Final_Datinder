@@ -1,6 +1,7 @@
 package edu.neu.madcourse.cs5520_explorer_final_Datinder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,6 +24,9 @@ public class TopNavigationBar {
             switch (item.getItemId()) {
                 case R.id.ic_profile:
                     //TODO: intent to profile activity
+                    Intent intent2 = new Intent(context, UserSetting.class);
+                    System.out.println("this is test");
+                    context.startActivity(intent2);
                     break;
 
                 case R.id.ic_main:

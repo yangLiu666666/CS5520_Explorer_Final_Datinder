@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">CS5520_Explorer_Final_DatingApp</string>
+        <string-array name="services">
+            <item>Netflix</item>
+            <item>Amazon Prime</item>
+            <item>Hulu</item>
+            <item>Vudu</item>
+            <item>HBO Now</item>
+            <item>Youtube Originals</item>
+            <item>None</item>
+        </string-array>
     <string name="menu_message">Message</string>
     <string name="menu_discover">Discover</string>
     <string name="menu_profile">Profile</string>

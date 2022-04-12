@@ -12,6 +12,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -19,7 +22,7 @@ public class SigninActivity extends AppCompatActivity {
     private static final String TAG = "SigninActivity";
     private ProgressBar spinner;
     private Button signIn;
-    private EditText email;
+    private EditText email, password;
     private TextView createAccount;
     private boolean loginBtnClicked;
     private FirebaseAuth mAuth;
@@ -37,6 +40,7 @@ public class SigninActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         signIn = (Button) findViewById(R.id.sign_in);
         email = (EditText) findViewById(R.id.sign_email);
+        password = findViewById(R.id.sign_password);
         createAccount = (TextView) findViewById(R.id.sign_tip);
 
         signIn.setOnClickListener(new View.OnClickListener() {
@@ -45,13 +49,22 @@ public class SigninActivity extends AppCompatActivity {
                 loginBtnClicked = true;
                 spinner.setVisibility(View.VISIBLE);
                 final String emailInfo = email.getText().toString();
+                final String passwordInfo = password.getText().toString();
                 if(emailInfo.isEmpty()){
                     Toast.makeText(SigninActivity.this, "Please enter your email", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent(SigninActivity.this, MatchScreenActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return;
+                    mAuth.signInWithEmailAndPassword(emailInfo, passwordInfo).addOnCompleteListener(SigninActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(SigninActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Intent intent = new Intent(SigninActivity.this, Swip.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                    });
                 }
                 spinner.setVisibility(View.GONE);
 
@@ -88,6 +101,12 @@ public class SigninActivity extends AppCompatActivity {
         };
 
     }
+
+    //    private boolean isStringNull(String string) {
+//        Log.d(TAG, "isStringNull: checking string if null.");
+//
+//        return string.equals("");
+//    }
 
     @Override
     protected void onStart() {
