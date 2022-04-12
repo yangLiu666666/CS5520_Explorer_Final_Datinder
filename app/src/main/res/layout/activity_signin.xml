@@ -47,6 +47,27 @@
                         android:padding="20dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="bottom"
+                    android:background="@color/white"
+                    app:passwordToggleEnabled="true">
+
+                    <EditText
+                        android:id="@+id/sign_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/devider"
+                        android:hint="Please enter your password"
+                        android:textSize="18sp"
+                        android:textStyle="italic"
+                        android:inputType="textPassword"
+                        android:padding="20dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/sign_in"
                     android:layout_width="match_parent"
@@ -70,8 +91,6 @@
                     android:textStyle="italic"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
                     app:layout_constraintVertical_bias="0.123" />
             </LinearLayout>
         </ScrollView>
