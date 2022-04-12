@@ -71,7 +71,7 @@ public class Swip extends AppCompatActivity {
         spinner.setVisibility(View.GONE);
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         firstStart = prefs.getBoolean("firstStart", true);
-//        setupTopNavigationView();
+        setupTopNavigationView();
 
         if (getIntent().getExtras() != null) {
             for (String key : getIntent().getExtras().keySet()) {
@@ -107,7 +107,7 @@ public class Swip extends AppCompatActivity {
 
         Log.d(tag, "onCreate " + currentUId);
 
-//        checkUserSex();
+        checkUserSex();
 
         rowItems = new ArrayList<Card>();
 
@@ -321,111 +321,111 @@ public class Swip extends AppCompatActivity {
 
     private String userNeed, userGive;
     private String oppositeUserNeed, oppositeUserGive;
-//    public void checkUserSex(){
-//
-//        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        DatabaseReference userDb = usersDb.child(user.getUid());
-//
-//        userDb.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                //Log.d("CardSearch", dataSnapshot.toString());
-//
-//                if (dataSnapshot.exists()){
-//                    if (dataSnapshot.child("need").getValue() != null){
-//                        // Log.d("CardSearch", "exists coloumn called");
-//
-//                        userNeed = dataSnapshot.child("need").getValue().toString();
-//                        userGive = dataSnapshot.child("give").getValue().toString();
-//                        //  Log.d("CardSearch", "datachange called");
-//
-//                        oppositeUserGive = userNeed;
-//                        oppositeUserNeed = userGive;
-//                        getOppositeSexUsers(oppositeUserGive, oppositeUserNeed);
-//                    }
-//                }
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
-//
-//    public void getOppositeSexUsers(final String oppositeUserGive, final String oppositeUserNeed){
-//
-//        usersDb.addChildEventListener(new ChildEventListener() {
-//
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                if (dataSnapshot.exists() && !dataSnapshot.getKey().equals(currentUId)) {
-//                    //Log.d("CardSearch", "getOppositeSex called");
-//
-//                    if (dataSnapshot.child("give").exists() && dataSnapshot.child("need").exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yeps").hasChild(currentUId) && dataSnapshot.child("give").getValue().toString().equals(oppositeUserGive) && dataSnapshot.child("need").getValue().toString().equals(oppositeUserNeed)) {
-//                        String profileImageUrl = "default";
-//                        if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
-//                            profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
-//                        }
-//                        cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), profileImageUrl, dataSnapshot.child("need").getValue().toString(), dataSnapshot.child("give").getValue().toString(), dataSnapshot.child("budget").getValue().toString());
-//                        rowItems.add(item);
-//                        arrayAdapter.notifyDataSetChanged();
-//                    }
-//                    else if( dataSnapshot.child("give").exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yeps").hasChild(currentUId) && dataSnapshot.child("give").getValue().toString().equals(oppositeUserGive)){
-//                        String profileImageUrl = "default";
-//                        if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
-//                            profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
-//                        }
-//                        cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), profileImageUrl, dataSnapshot.child("need").getValue().toString(), dataSnapshot.child("give").getValue().toString(),  dataSnapshot.child("budget").getValue().toString());
-//                        rowItems.add(item);
-//                        arrayAdapter.notifyDataSetChanged();
-//                    }
-//                    else if( dataSnapshot.child("need").exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yeps").hasChild(currentUId) && dataSnapshot.child("need").getValue().toString().equals(oppositeUserNeed)){
-//                        String profileImageUrl = "default";
-//                        if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
-//                            profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
-//                        }
-//                        cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), profileImageUrl, dataSnapshot.child("need").getValue().toString(), dataSnapshot.child("give").getValue().toString(),  dataSnapshot.child("budget").getValue().toString());
-//                        rowItems.add(item);
-//                        arrayAdapter.notifyDataSetChanged();
-//                    }
-//                }
-//                //spinner.setVisibility(View.GONE);
-//
-//
-//                //Display a banner when no cards are available to display
-//                TextView tv = (TextView)findViewById(R.id.noCardsBanner);
-//                if(rowItems.size() == 0) {
-//                    tv.setVisibility(View.VISIBLE);
-//                } else {
-//                    tv.setVisibility(View.INVISIBLE);
-//                }
-//
-//
-//            }
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//            }
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//            }
-//        });
-//
-//    }
-//
+    public void checkUserSex(){
+
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference userDb = usersDb.child(user.getUid());
+
+        userDb.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //Log.d("CardSearch", dataSnapshot.toString());
+
+                if (dataSnapshot.exists()){
+                    if (dataSnapshot.child("need").getValue() != null){
+                        // Log.d("CardSearch", "exists coloumn called");
+
+                        userNeed = dataSnapshot.child("need").getValue().toString();
+                        userGive = dataSnapshot.child("give").getValue().toString();
+                        //  Log.d("CardSearch", "datachange called");
+
+                        oppositeUserGive = userNeed;
+                        oppositeUserNeed = userGive;
+                        getOppositeSexUsers(oppositeUserGive, oppositeUserNeed);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getOppositeSexUsers(final String oppositeUserGive, final String oppositeUserNeed){
+
+        usersDb.addChildEventListener(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                if (dataSnapshot.exists() && !dataSnapshot.getKey().equals(currentUId)) {
+                    //Log.d("CardSearch", "getOppositeSex called");
+
+                    if (dataSnapshot.child("give").exists() && dataSnapshot.child("need").exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yeps").hasChild(currentUId) && dataSnapshot.child("give").getValue().toString().equals(oppositeUserGive) && dataSnapshot.child("need").getValue().toString().equals(oppositeUserNeed)) {
+                        String profileImageUrl = "default";
+                        if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
+                            profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
+                        }
+                        Card item = new Card(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), profileImageUrl, dataSnapshot.child("need").getValue().toString(), dataSnapshot.child("give").getValue().toString(), dataSnapshot.child("budget").getValue().toString());
+                        rowItems.add(item);
+                        arrayAdapter.notifyDataSetChanged();
+                    }
+                    else if( dataSnapshot.child("give").exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yeps").hasChild(currentUId) && dataSnapshot.child("give").getValue().toString().equals(oppositeUserGive)){
+                        String profileImageUrl = "default";
+                        if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
+                            profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
+                        }
+                        Card item = new Card(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), profileImageUrl, dataSnapshot.child("need").getValue().toString(), dataSnapshot.child("give").getValue().toString(),  dataSnapshot.child("budget").getValue().toString());
+                        rowItems.add(item);
+                        arrayAdapter.notifyDataSetChanged();
+                    }
+                    else if( dataSnapshot.child("need").exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yeps").hasChild(currentUId) && dataSnapshot.child("need").getValue().toString().equals(oppositeUserNeed)){
+                        String profileImageUrl = "default";
+                        if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
+                            profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
+                        }
+                        Card item = new Card(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), profileImageUrl, dataSnapshot.child("need").getValue().toString(), dataSnapshot.child("give").getValue().toString(),  dataSnapshot.child("budget").getValue().toString());
+                        rowItems.add(item);
+                        arrayAdapter.notifyDataSetChanged();
+                    }
+                }
+                //spinner.setVisibility(View.GONE);
+
+
+                //Display a banner when no cards are available to display
+                TextView tv = (TextView)findViewById(R.id.noCardsBanner);
+                if(rowItems.size() == 0) {
+                    tv.setVisibility(View.VISIBLE);
+                } else {
+                    tv.setVisibility(View.INVISIBLE);
+                }
+
+
+            }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+    }
+
 
     /**
      * setup top tool bar
      */
     private void setupTopNavigationView() {
         Log.d("", "setupTopNavigationView: setting up TopNavigationView");
-        BottomNavigationViewEx tvEx = findViewById(R.id.topNavBar);
+        BottomNavigationViewEx tvEx = findViewById(R.id.topNavViewBar);
         TopNavigationBar.logTopNav(tvEx);
         TopNavigationBar.setupTopBar(Swip.this, tvEx);
         Menu menu = tvEx.getMenu();

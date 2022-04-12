@@ -101,7 +101,7 @@ public class RegisterQuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveUserInformation();
-                Intent intent = new Intent(RegisterQuestionActivity.this, MatchScreenActivity.class);
+                Intent intent = new Intent(RegisterQuestionActivity.this, Swip.class);
                 startActivity(intent);
                 finish();
                 return;

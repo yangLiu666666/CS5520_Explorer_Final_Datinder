@@ -22,7 +22,7 @@ public class SwipDislike extends AppCompatActivity {
         setContentView(R.layout.activity_swip_dislike);
 
         Intent intent = getIntent();
-//        setupTopNavigationBar();
+        setupTopNavigationBar();
         dislike = findViewById(R.id.dislike);
         String profileUrl = intent.getStringExtra("url");
 
@@ -52,7 +52,7 @@ public class SwipDislike extends AppCompatActivity {
 
     private void setupTopNavigationBar() {
         Log.d("SwipDislikeLike", "setupTopNavigationBar: setting up Top Navigation Bar");
-        BottomNavigationViewEx ex = findViewById(R.id.topNavBar);
+        BottomNavigationViewEx ex = findViewById(R.id.topNavViewBar);
         TopNavigationBar.logTopNav(ex);
         TopNavigationBar.setupTopBar(context, ex);
         Menu menu = ex.getMenu();

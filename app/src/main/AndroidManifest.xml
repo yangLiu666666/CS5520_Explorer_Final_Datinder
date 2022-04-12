@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.neu.madcourse.cs5520_explorer_final_Datinder">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +14,18 @@
         android:roundIcon="@mipmap/ic_launcher_team_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CS5520_Explorer_Final_DatingApp">
+        <activity
+            android:name=".UserSetting"
+            android:exported="false" />
+        <activity
+            android:name=".Swip"
+            android:exported="false" />
+        <activity
+            android:name=".SwipDislike"
+            android:exported="false" />
+        <activity
+            android:name=".SwipLike"
+            android:exported="false" />
         <activity
             android:name=".MatchScreenActivity"
             android:exported="false" />
