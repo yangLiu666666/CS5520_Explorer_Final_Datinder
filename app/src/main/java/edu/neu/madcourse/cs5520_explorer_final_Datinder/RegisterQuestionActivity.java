@@ -160,7 +160,7 @@ public class RegisterQuestionActivity extends AppCompatActivity {
     private void getUserInfo() {
         userDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0){
                     Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
                     if(map.get("name")!=null){
@@ -184,7 +184,7 @@ public class RegisterQuestionActivity extends AppCompatActivity {
                         userImageUrl = map.get("userImageUrl").toString();
                         switch(userImageUrl){
                             case "default":
-                                Glide.with(getApplication()).load(R.drawable.default_man).into(userImage);
+                                Glide.with(getApplication()).load(R.drawable.empty_user_profile).into(userImage);
                                 break;
                             default:
                                 Glide.with(getApplication()).load(userImageUrl).into(userImage);
