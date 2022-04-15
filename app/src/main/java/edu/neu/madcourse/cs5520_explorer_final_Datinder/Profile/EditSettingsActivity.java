@@ -1,6 +1,7 @@
 package edu.neu.madcourse.cs5520_explorer_final_Datinder.Profile;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -11,13 +12,17 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import edu.neu.madcourse.cs5520_explorer_final_Datinder.MainActivity;
 import edu.neu.madcourse.cs5520_explorer_final_Datinder.R;
+import edu.neu.madcourse.cs5520_explorer_final_Datinder.SigninActivity;
 
 public class EditSettingsActivity extends AppCompatActivity {
     private SwitchCompat man;
     private SwitchCompat woman;
     private TextView gender_tv, distance_tv;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,8 @@ public class EditSettingsActivity extends AppCompatActivity {
         woman = findViewById(R.id.switch_woman);
         distance_tv = findViewById(R.id.distance_text);
         gender_tv = findViewById(R.id.gender_text);
+
+        mAuth = FirebaseAuth.getInstance();
 
 
         distance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -76,7 +83,15 @@ public class EditSettingsActivity extends AppCompatActivity {
 
     //Logout onClick of Button "logout" and "delete account" in activity.settings.xml
     //go back to main page
+    //clear previous SharedPreferences
     public void Logout(View view) {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        mAuth.signOut();
+        SharedPreferences myPrefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = myPrefs.edit();
+        editor.clear();
+        editor.apply();
+        Intent intent = new Intent(EditSettingsActivity.this, SigninActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

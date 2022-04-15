@@ -144,29 +144,36 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Request CAMERA & STORAGE (WRITE & READ) permissions
+     * showAlertDialog1 as default
+     * showAlertDialog2 for previously denied request
+     * update sharedPreferences
+     */
     private void requestMultiplePermissions() {
-        for (String x : permissionsRequired) {
-            if (ActivityCompat.checkSelfPermission(EditProfileActivity.this, x) != PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(EditProfileActivity.this, x)) {
-                    //show alertDialog asking for permission
-                    showAlertDialog1();
-                } else if (permissionStatus.getBoolean(permissionsRequired[0], false)) {
-                    //redirect to settings after showing info why need the permission
-                    //previously cancelled
-                    showAlertDialog2();
-                } else {
-                    //request permission
-                    ActivityCompat.requestPermissions(EditProfileActivity.this, permissionsRequired, 100);
-                }
-                //update SharedPreferences
-                SharedPreferences.Editor editor = permissionStatus.edit();
-                editor.putBoolean(permissionsRequired[0], true);
-                editor.apply();
+        if (ActivityCompat.checkSelfPermission(EditProfileActivity.this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(EditProfileActivity.this, permissionsRequired[1]) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(EditProfileActivity.this, permissionsRequired[2]) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(EditProfileActivity.this, permissionsRequired[0])
+                    || ActivityCompat.shouldShowRequestPermissionRationale(EditProfileActivity.this, permissionsRequired[1])
+                    || ActivityCompat.shouldShowRequestPermissionRationale(EditProfileActivity.this, permissionsRequired[2])) {
+                //show alertDialog asking for permission
+                showAlertDialog1();
+            } else if (permissionStatus.getBoolean(permissionsRequired[0], false)) {
+                //redirect to settings after showing info why need the permission
+                //previously cancelled
+                showAlertDialog2();
             } else {
-                //means already have this permission
-                //nothing to show period => continue
+                //request permission
+                ActivityCompat.requestPermissions(EditProfileActivity.this, permissionsRequired, 100);
             }
+            //update SharedPreferences
+            SharedPreferences.Editor editor = permissionStatus.edit();
+            editor.putBoolean(permissionsRequired[0], true);
+            editor.apply();
+        } else {
+            //means already have this permission
+            //nothing to show period => continue
         }
     }
 
