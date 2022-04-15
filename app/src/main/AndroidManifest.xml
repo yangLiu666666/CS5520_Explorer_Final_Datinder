@@ -27,6 +27,7 @@
             android:name=".CreateAccountActivity"
             android:exported="false" />
         <activity android:name=".Profile.ProfileActivity"
+            android:label="Settings"
             android:exported="false" />
         <activity android:name=".Profile.EditProfileActivity"
             android:exported="false" />
