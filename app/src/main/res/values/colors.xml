@@ -16,5 +16,6 @@
     <color name="error_stroke_color">#F27474</color>
     <color name="devider">#ebebeb</color>
     <color name="light_grey">#eeeeee</color>
+    <color name="smoke_purple">#6200EA</color>
 
 </resources>

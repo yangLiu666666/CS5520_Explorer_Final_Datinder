@@ -198,7 +198,8 @@ public class UserSetting extends AppCompatActivity {
                     .show();
         }  else if (item.getItemId() == R.id.logout) {
             spinner.setVisibility(View.VISIBLE);
-            OneSignal.setSubscription(false);
+//            OneSignal.setSubscription(false);
+            OneSignal.disablePush(true);
             mAuth.signOut();
             Toast.makeText(this,"Log Out successful", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(UserSetting.this, RegisterQuestionActivity.class);

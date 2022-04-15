@@ -28,7 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.onesignal.OSNotificationAction;
-import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OneSignal;
 
 

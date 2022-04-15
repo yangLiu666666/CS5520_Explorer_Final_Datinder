@@ -18,6 +18,12 @@
             android:name=".UserSetting"
             android:exported="false" />
         <activity
+            android:name=".Chat.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Matches.MatchActivity"
+            android:exported="false" />
+        <activity
             android:name=".Swip"
             android:exported="false" />
         <activity

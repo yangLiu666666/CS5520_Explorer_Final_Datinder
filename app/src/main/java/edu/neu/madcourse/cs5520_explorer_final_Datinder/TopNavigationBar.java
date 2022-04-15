@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import edu.neu.madcourse.cs5520_explorer_final_Datinder.Matches.MatchActivity;
+
 /**
  * This class serves for transferring to three different activities when
  * make selections on the top navigation bar
@@ -35,6 +37,8 @@ public class TopNavigationBar {
 
                 case R.id.ic_matched:
                     //TODO: intent to matched activity
+                    Intent intent = new Intent(context, MatchActivity.class);
+                    context.startActivity(intent);
                     break;
             }
             return false;
