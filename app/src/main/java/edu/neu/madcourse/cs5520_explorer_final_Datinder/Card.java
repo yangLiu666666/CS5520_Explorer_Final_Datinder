@@ -3,17 +3,23 @@ package edu.neu.madcourse.cs5520_explorer_final_Datinder;
 public class Card {
     private String userId;
     private String name;
-    private String profileImageUrl;
+    private String userImageUrl;
     private String need;
     private String give;
     private String budget;
-    public Card (String userId, String name, String profileImageUrl, String need, String give, String budget){
+//    public Card (String userId, String name, String userImageUrl, String need, String give, String budget){
+//        this.userId = userId;
+//        this.name = name;
+//        this.userImageUrl = userImageUrl;
+//        this.need = need;
+//        this.give = give;
+//        this.budget = budget;
+//    }
+    public Card (String userId, String name, String userImageUrl){
         this.userId = userId;
         this.name = name;
-        this.profileImageUrl = profileImageUrl;
-        this.need = need;
-        this.give = give;
-        this.budget = budget;
+        this.userImageUrl = userImageUrl;
+
     }
 
     public String getUserId(){
@@ -30,8 +36,8 @@ public class Card {
         this.name = name;
     }
 
-    public String getProfileImageUrl(){
-        return profileImageUrl;
+    public String getUserImageUrl(){
+        return userImageUrl;
     }
     public String getNeed(){
         return need;
@@ -54,7 +60,7 @@ public class Card {
     public String getBudget(){
         return budget;
     }
-    public void setProfileImageUrl(String profileImageUrl){
-        this.profileImageUrl = profileImageUrl;
+    public void setUserImageUrl(String userImageUrl){
+        this.userImageUrl = userImageUrl;
     }
 }
