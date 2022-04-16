@@ -139,9 +139,6 @@ public class MatchActivity extends AppCompatActivity {
                     String userId = dataSnapshot.getKey();
                     String name = "";
                     String userImageUrl = "";
-                    String need = "";
-                    String give = "";
-                    String budget = "";
                     final String lastMessage = "";
                     String lastTimeStamp = "";
 
@@ -154,16 +151,6 @@ public class MatchActivity extends AppCompatActivity {
 
                     if(dataSnapshot.child("profileImageUrl").getValue()!=null){
                         userImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
-                    }
-
-                    if(dataSnapshot.child("need").getValue() != null){
-                        need = dataSnapshot.child("need").getValue().toString();
-                    }
-                    if(dataSnapshot.child("give").getValue() != null){
-                        give = dataSnapshot.child("give").getValue().toString();
-                    }
-                    if(dataSnapshot.child("budget").getValue() != null){
-                        budget = dataSnapshot.child("budget").getValue().toString();
                     }
 
                     String milliSec = mLastTimeStamp;

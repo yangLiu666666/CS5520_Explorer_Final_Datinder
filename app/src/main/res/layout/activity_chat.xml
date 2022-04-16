@@ -46,26 +46,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:padding="15dp">
 
-
-        <!--<com.google.android.material.textfield.TextInputLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="0.8"-->
-        <!--android:background="@color/white">-->
-
-        <!--<EditText-->
-        <!--android:id="@+id/message"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_alignStart="@+id/sendLayout"-->
-        <!--android:layout_alignTop="@+id/sendLayout"-->
-        <!--android:background="@drawable/edit_text_focused_bg"-->
-        <!--android:hint="Type..."-->
-        <!--android:padding="10dp" />-->
-        <!--</com.google.android.material.textfield.TextInputLayout>-->
-
-
-
         <EditText
             android:layout_weight="0.8"
             android:id="@+id/message"

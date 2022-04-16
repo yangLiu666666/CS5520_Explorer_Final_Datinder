@@ -27,6 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -51,8 +52,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private EditText mSendEditText;
     private ImageButton mBack;
-
     private ImageButton mSendButton;
+
     private String notification;
     private String currentUserID, matchId, chatId;
     private String matchName, matchGive, matchNeed, matchBudget, matchProfile;
@@ -80,7 +81,7 @@ public class ChatActivity extends AppCompatActivity {
         mDatabaseChat = FirebaseDatabase.getInstance().getReference().child("Chat");
 
         getChatId();
-//        getMatchIcon();
+        getMatchIcon();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setNestedScrollingEnabled(false);
@@ -213,13 +214,14 @@ public class ChatActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.chat_menu, menu);
-//        TextView mMatchNameTextView= (TextView) findViewById(R.id.chattoolbartag);
-//        mMatchNameTextView.setText(matchName);
+        TextView mMatchNameTextView= (TextView) findViewById(R.id.chattoolbartag);
+        mMatchNameTextView.setText(matchName);
+        ImageView mMatchImage = (ImageView) findViewById(R.id.MatchImage);
+        Glide.with(this).load(matchIcon).into(mMatchImage);
         return true;
     }
 
     public void showProfile(View v){
-        //Todo: update to show the profile of user
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.item, null);

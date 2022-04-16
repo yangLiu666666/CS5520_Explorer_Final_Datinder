@@ -3,6 +3,7 @@ package edu.neu.madcourse.cs5520_explorer_final_Datinder.Chat;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +22,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolder>{
     private Context context;
 
 
-    public ChatAdapter(List<Chat> matchesList, Context context){
-        this.chatList = matchesList;
+    public ChatAdapter(List<Chat> chatList, Context context){
+        this.chatList = chatList;
         this.context = context;
     }
 
@@ -40,9 +41,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolder>{
     @Override
     public void onBindViewHolder(ChatViewHolder holder, int position) {
         holder.mMessage.setText(chatList.get(position).getMessage());
-        if(!chatList.get(position).getReceiverImageUrl().equals("default")){
-            Glide.with(context).load(chatList.get(position).getReceiverImageUrl()).into(holder.mIcon);
-        }
 
         if(chatList.get(position).getCurrentUser()){
             GradientDrawable shape =  new GradientDrawable();
@@ -53,8 +51,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolder>{
             holder.mMessage.setBackground(shape);
             holder.mMessage.setTextColor(Color.parseColor("#FFFFFF"));
 
-
-
         }else{
             GradientDrawable shape =  new GradientDrawable();
             shape.setCornerRadius(20);
@@ -63,6 +59,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolder>{
             holder.mMessage.setBackground(shape);
             holder.mContainer.setGravity(Gravity.START);
             holder.mMessage.setTextColor(Color.parseColor("#FFFFFF"));
+            holder.mMessage.setText(chatList.get(position).getMessage());
         }
 
     }
