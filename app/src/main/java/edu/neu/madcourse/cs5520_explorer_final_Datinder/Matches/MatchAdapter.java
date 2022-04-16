@@ -43,7 +43,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchViewHolder>{
         holder.mLastMessage.setText(matchesList.get(position).getLastMessage());
         String lastSeen = "";
         lastSeen  = matchesList.get(position).getLastSeen();
-        Log.d("matches", lastSeen);
+//        Log.d("matches", lastSeen);
 
         // lastSeen actually works as lastSend. if lastSend is true (other person has send a message), then make dot visible.
         if(lastSeen.equals("true"))
@@ -51,7 +51,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchViewHolder>{
         else
             holder.mNotificationDot.setVisibility(View.INVISIBLE);
         holder.mLastTimeStamp.setText(matchesList.get(position).getLastTimeStamp());
-        if(!matchesList.get(position).getIconUrl().equals("default")){
+        if(matchesList.get(position).getIconUrl() != ""  && !matchesList.get(position).getIconUrl().equals("default")){
             Glide.with(context).load(matchesList.get(position).getIconUrl()).into(holder.mMatchImage);
         }
     }

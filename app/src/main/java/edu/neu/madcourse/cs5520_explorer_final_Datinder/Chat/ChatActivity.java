@@ -217,7 +217,9 @@ public class ChatActivity extends AppCompatActivity {
         TextView mMatchNameTextView= (TextView) findViewById(R.id.chattoolbartag);
         mMatchNameTextView.setText(matchName);
         ImageView mMatchImage = (ImageView) findViewById(R.id.MatchImage);
-        Glide.with(this).load(matchIcon).into(mMatchImage);
+        if(matchIcon != null &&  !matchIcon.equals("default")){
+            Glide.with(this).load(matchIcon).into(mMatchImage);
+        }
         return true;
     }
 
