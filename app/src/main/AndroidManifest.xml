@@ -14,9 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_team_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CS5520_Explorer_Final_DatingApp">
-        <activity
-            android:name=".UserSetting"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".UserSetting"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".Chat.ChatActivity"
             android:exported="false" />
@@ -43,6 +43,13 @@
             android:exported="false" />
         <activity
             android:name=".CreateAccountActivity"
+            android:exported="false" />
+        <activity android:name=".Profile.ProfileActivity"
+            android:label="Settings"
+            android:exported="false" />
+        <activity android:name=".Profile.EditProfileActivity"
+            android:exported="false" />
+        <activity android:name=".Profile.EditSettingsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

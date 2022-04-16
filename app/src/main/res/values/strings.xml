@@ -1,15 +1,28 @@
 <resources>
-    <string name="app_name">CS5520_Explorer_Final_DatingApp</string>
-        <string-array name="services">
-            <item>Netflix</item>
-            <item>Amazon Prime</item>
-            <item>Hulu</item>
-            <item>Vudu</item>
-            <item>HBO Now</item>
-            <item>Youtube Originals</item>
-            <item>None</item>
-        </string-array>
+    <string name="app_name">Datinder</string>
     <string name="menu_message">Message</string>
     <string name="menu_discover">Discover</string>
     <string name="menu_profile">Profile</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="legal">Legal</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="licenses">Licenses</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="logout">Logout</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_6">6</string>
+    <string name="about_you">Tell more about yourself</string>
+    <string name="man">Man</string>
+    <string name="woman">Woman</string>
+    <string name="_4">4</string>
+    <string name="_5">5</string>
+    <string name="school">School</string>
+    <string name="gender">Gender</string>
+    <string name="prefer_not_to_say">Prefer not to say</string>
+    <string name="don_t_show_my_age">Don\'t Show my age</string>
+    <string name="privacy_settings">Privacy Settings</string>
+    <string name="don_t_show_my_location">Don\'t show my location</string>
 </resources>

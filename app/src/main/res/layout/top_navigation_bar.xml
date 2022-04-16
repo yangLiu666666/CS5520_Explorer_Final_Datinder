@@ -1,45 +1,45 @@
-<!--<?xml version="1.0" encoding="utf-8"?>-->
+<?xml version="1.0" encoding="utf-8"?>
 <!--
     * custom widget code reference:
     * https://github.com/ittianyu/BottomNavigationViewEx#example-for-gradle
     -->
-<!--<merge xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto" >-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="70dp"-->
-<!--        android:background="@color/white">-->
-
-
-<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--            android:id="@+id/topNavBar"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="60dp"-->
-<!--            android:background="@color/white"-->
-<!--            app:itemIconSize="30dp"-->
-<!--            app:itemIconTint="@drawable/top_navigation_bar_ic_selector"-->
-<!--            app:labelVisibilityMode="unlabeled"-->
-<!--            app:menu="@menu/navigation_tool_bar" />-->
-
-<!--    </LinearLayout>-->
-
-<!--</merge>-->
-
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="70dp">
-
-    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
-        android:id="@+id/topNavViewBar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:background="@drawable/setting_color"
-        app:menu="@menu/navigation_tool_bar">
+        android:layout_height="70dp"
+        android:background="@color/white">
 
-    </com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx>
 
-</LinearLayout>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/topNavBar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white"
+            app:itemIconSize="30dp"
+            app:itemIconTint="@drawable/top_navigation_bar_ic_selector"
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/menu_navigation_with_view_pager" />
+
+    </LinearLayout>
+
+</merge>
+
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="70dp">-->
+
+<!--    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx-->
+<!--        android:id="@+id/topNavViewBar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="bottom"-->
+<!--        android:background="@drawable/setting_color"-->
+<!--        app:menu="@menu/navigation_tool_bar">-->
+
+<!--    </com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx>-->
+
+<!--</LinearLayout>-->

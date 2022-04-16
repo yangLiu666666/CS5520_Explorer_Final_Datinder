@@ -56,7 +56,7 @@ public class SwipLike extends AppCompatActivity {
 
     private void setupTopNavigationBar() {
         Log.d("SwipLike", "setupTopNavigationBar: setting up Top Navigation Bar");
-        BottomNavigationViewEx ex = findViewById(R.id.topNavViewBar);
+        BottomNavigationViewEx ex = findViewById(R.id.topNavBar);
         TopNavigationBar.logTopNav(ex);
         TopNavigationBar.setupTopBar(context, ex);
         Menu menu = ex.getMenu();
