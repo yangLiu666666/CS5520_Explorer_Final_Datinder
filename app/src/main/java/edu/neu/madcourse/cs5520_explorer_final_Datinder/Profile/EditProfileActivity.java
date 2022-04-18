@@ -44,7 +44,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private TextView man_text, women_text, nongender_text;
     private ImageView imageView1, imageView2, imageView3, imageView4, imageView5, imageView6, imageView;
     private DatabaseReference userDatabase;
-    private String[] permissionsRequired = new String[]{Manifest.permission.CAMERA,
+    private final String[] permissionsRequired = new String[]{Manifest.permission.CAMERA,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private SharedPreferences permissionStatus;
@@ -169,8 +169,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
             //update SharedPreferences
             SharedPreferences.Editor editor = permissionStatus.edit();
-            editor.putBoolean(permissionsRequired[0], true);
-            editor.apply();
+            editor.putBoolean(permissionsRequired[0], true).commit();
         } else {
             //means already have this permission
             //nothing to show period => continue
@@ -183,19 +182,14 @@ public class EditProfileActivity extends AppCompatActivity {
 
         builder.setTitle("Add Photo!");
 
-        builder.setItems(menu, new DialogInterface.OnClickListener() {
+        builder.setItems(menu, (dialog, item) -> {
 
-            @Override
-
-            public void onClick(DialogInterface dialog, int item) {
-
-                if (menu[item].equals("Take Photo")) {
-                    cameraIntent();
-                } else if (menu[item].equals("Choose from Gallery")) {
-                    galleryIntent();
-                } else if (menu[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
+            if (menu[item].equals("Take Photo")) {
+                cameraIntent();
+            } else if (menu[item].equals("Choose from Gallery")) {
+                galleryIntent();
+            } else if (menu[item].equals("Cancel")) {
+                dialog.dismiss();
             }
         });
         builder.show();
@@ -280,7 +274,7 @@ public class EditProfileActivity extends AppCompatActivity {
     @SuppressWarnings("deprecation")
     private void showAlertDialog2() {
         AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
-        builder.setTitle("Permissions needed to proceed");
+        builder.setTitle("Permissions needed to granted");
         builder.setMessage("Camera and Location permissions need to be granted.");
         builder.setPositiveButton("Grant", (dialogInterface, i) -> {
             dialogInterface.cancel();
@@ -289,7 +283,7 @@ public class EditProfileActivity extends AppCompatActivity {
             Uri uri = Uri.fromParts("package", getPackageName(), null);
             intent.setData(uri);
             startActivityForResult(intent, 101);
-            Toast.makeText(getBaseContext(), "Go to SETTINGS to grant Camera and Location permissions.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Go to PERMISSIONS to grant Camera and Location permissions.", Toast.LENGTH_LONG).show();
         });
         builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel());
         builder.show();
