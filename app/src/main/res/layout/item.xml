@@ -39,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/human" />
+                    android:src="@drawable/empty_user_profile" />
 
                 <TextView
                     android:id="@+id/item_swipe_left_indicator"
@@ -69,7 +69,7 @@
                     android:paddingRight="10dp"
                     android:paddingBottom="5dp"
                     android:text="NOPE"
-                    android:textColor="#F44336"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="35sp" />
 
 

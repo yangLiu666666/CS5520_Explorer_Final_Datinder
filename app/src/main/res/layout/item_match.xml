@@ -15,8 +15,9 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_margin="5dp"
-            android:src="@drawable/monkey"
+            android:src="@drawable/empty_user_profile"
             app:civ_border_width="1dp"
+            app:civ_border_color="@color/colorPrimary"
             tools:ignore="MissingClass" />
 
         <LinearLayout
@@ -34,23 +35,26 @@
                     android:layout_height="20dp"
                     android:orientation="horizontal"
                     android:weightSum="2" >
+
                     <TextView
                         android:id="@+id/MatchName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="serif"
                         android:text="Alice"
                         android:textColor="@color/black"
-                        android:layout_weight="1"
                         android:textSize="18dp" />
+
                     <TextView
                         android:id="@+id/lastTimeStamp"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:layout_marginRight="10dp"
                         android:text="TimeStamp"
-                        android:textSize="16dp" />
+                        android:textSize="14sp" />
 
 
                 </LinearLayout>
@@ -65,12 +69,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
                     android:id="@+id/lastMessage"
-                    android:text="Last Message"
-                    android:textSize="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="0.7"
+                    android:text="Last Message"
+                    android:textSize="14sp"
 
                     />
 

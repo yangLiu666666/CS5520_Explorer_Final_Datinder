@@ -37,7 +37,7 @@
             android:paddingRight="10dp"
             android:paddingBottom="5dp"
             android:text="NOPE"
-            android:textColor="#F44336"
+            android:textColor="@color/colorPrimary"
             android:textSize="40sp" />
 
     </FrameLayout>
