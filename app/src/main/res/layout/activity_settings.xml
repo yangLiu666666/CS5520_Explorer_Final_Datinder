@@ -364,14 +364,14 @@
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="10dp"
                         android:background="@color/white"
-                        android:onClick="Logout"
+                        android:gravity="center"
+                        android:onClick="DeleteAccount"
+                        android:padding="10dp"
                         android:text="@string/delete_account"
-                        android:textStyle="bold"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
