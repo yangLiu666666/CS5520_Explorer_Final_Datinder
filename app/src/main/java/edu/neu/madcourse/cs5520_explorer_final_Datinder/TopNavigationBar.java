@@ -31,7 +31,8 @@ public class TopNavigationBar {
                     break;
 
                 case R.id.ic_main:
-                    //TODO: intent to MainActivity
+                    Intent intent2 = new Intent(context, Swip.class);
+                    context.startActivity(intent2);
                     break;
 
                 case R.id.ic_matched:

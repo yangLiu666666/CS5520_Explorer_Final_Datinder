@@ -39,6 +39,8 @@ import ru.dimorinny.showcasecard.radius.Radius;
 
 public class Swip extends AppCompatActivity {
 
+    //second icon in the navigation bar
+    private static final int ACTIVITY_ITEM = 1;
     private static final String TAG = "Swip";
     private arrayAdapter arrayAdapter;
     private int i;
@@ -455,7 +457,7 @@ public class Swip extends AppCompatActivity {
         TopNavigationBar.logTopNav(tvNB);
         TopNavigationBar.setupTopBar(Swip.this, tvNB);
         Menu menu = tvNB.getMenu();
-        MenuItem menuItem = menu.getItem(1);
+        MenuItem menuItem = menu.getItem(ACTIVITY_ITEM);
         menuItem.setChecked(true);
 //        Log.d("", "setupTopNavigationView: setting up TopNavigationView");
 //        BottomNavigationViewEx tvEx = findViewById(R.id.topNavBar);

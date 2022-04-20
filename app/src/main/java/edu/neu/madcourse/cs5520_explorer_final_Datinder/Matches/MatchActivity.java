@@ -3,6 +3,8 @@ package edu.neu.madcourse.cs5520_explorer_final_Datinder.Matches;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -10,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,9 +26,15 @@ import java.util.HashMap;
 import java.util.List;
 
 import edu.neu.madcourse.cs5520_explorer_final_Datinder.MainActivity;
+import edu.neu.madcourse.cs5520_explorer_final_Datinder.Profile.ProfileActivity;
 import edu.neu.madcourse.cs5520_explorer_final_Datinder.R;
+import edu.neu.madcourse.cs5520_explorer_final_Datinder.TopNavigationBar;
 
 public class MatchActivity extends AppCompatActivity {
+
+    //third icon in the navigation bar
+    private static final int ACTIVITY_ITEM = 2;
+
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mMatchesAdapter;
     private RecyclerView.LayoutManager mMatchesLayoutManager;
@@ -60,6 +69,7 @@ public class MatchActivity extends AppCompatActivity {
 //                return;
 //            }
 //        });
+        setUpTopNavigationBar();
         getUserMatchId();
         mLastMessage = mLastTimeStamp = lastSeen = "";
     }
@@ -205,5 +215,17 @@ public class MatchActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
         return;
+    }
+
+    /**
+     * set up top navigation bar view
+     */
+    private void setUpTopNavigationBar() {
+        BottomNavigationView tvNB = findViewById(R.id.topNavBar);
+        TopNavigationBar.logTopNav(tvNB);
+        TopNavigationBar.setupTopBar(MatchActivity.this, tvNB);
+        Menu menu = tvNB.getMenu();
+        MenuItem menuItem = menu.getItem(ACTIVITY_ITEM);
+        menuItem.setChecked(true);
     }
 }
