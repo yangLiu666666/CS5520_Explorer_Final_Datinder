@@ -83,13 +83,14 @@ public class EditSettingsActivity extends AppCompatActivity {
 
     //Logout onClick of Button "logout" and "delete account" in activity.settings.xml
     //go back to main page
+    //clear previous SharedPreferences
     public void Logout(View view) {
         mAuth.signOut();
         SharedPreferences myPrefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = myPrefs.edit();
         editor.clear();
         editor.apply();
-        Intent intent = new Intent(EditSettingsActivity.this, MainActivity.class);
+        Intent intent = new Intent(EditSettingsActivity.this, SigninActivity.class);
         startActivity(intent);
         finish();
     }

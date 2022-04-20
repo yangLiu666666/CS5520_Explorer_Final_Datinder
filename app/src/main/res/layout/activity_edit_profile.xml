@@ -481,8 +481,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:textColor="@color/colorPrimary"
                             android:text="@string/don_t_show_my_age"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="18sp" />
 
                         <androidx.appcompat.widget.SwitchCompat
