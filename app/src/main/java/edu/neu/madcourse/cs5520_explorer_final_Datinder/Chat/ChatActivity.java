@@ -105,7 +105,6 @@ public class ChatActivity extends AppCompatActivity {
                 sendMessage();
             }
         });
-
         mRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v,
@@ -227,15 +226,16 @@ public class ChatActivity extends AppCompatActivity {
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.item, null);
-
-
         TextView name = (TextView) popupView.findViewById(R.id.name);
         ImageView image = (ImageView) popupView.findViewById(R.id.image);
         name.setText(matchName);
 
+        if(matchIcon != null &&  !matchIcon.equals("default")){
+            Glide.with(this).load(matchIcon).into(image);
+        }
         // create the popup window
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
         boolean focusable = true; // lets taps outside the popup also dismiss it
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
