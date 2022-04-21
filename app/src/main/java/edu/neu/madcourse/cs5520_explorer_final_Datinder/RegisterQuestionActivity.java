@@ -44,6 +44,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
 
+@SuppressWarnings("ALL")
 public class RegisterQuestionActivity extends AppCompatActivity {
     private EditText userName;
     private ProgressBar spinner;
