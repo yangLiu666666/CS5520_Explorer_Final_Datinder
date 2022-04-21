@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    * custom widget code reference:
-    * https://github.com/ittianyu/BottomNavigationViewEx#example-for-gradle
-    -->
+
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
@@ -25,21 +22,3 @@
     </LinearLayout>
 
 </merge>
-
-
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="70dp">-->
-
-<!--    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx-->
-<!--        android:id="@+id/topNavViewBar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_gravity="bottom"-->
-<!--        android:background="@drawable/setting_color"-->
-<!--        app:menu="@menu/navigation_tool_bar">-->
-
-<!--    </com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx>-->
-
-<!--</LinearLayout>-->

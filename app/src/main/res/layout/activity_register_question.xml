@@ -17,7 +17,7 @@
             android:fillViewport="true">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingLeft="25dp"
@@ -85,7 +85,7 @@
                     android:background="@color/light_grey"
                     android:padding="5dp"
                     android:text="Which gender best describes you?"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     android:textStyle="bold|italic"/>
                 <RadioGroup
                     android:layout_width="match_parent"
@@ -95,19 +95,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Male"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         android:textStyle="italic"/>
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Female"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         android:textStyle="italic"/>
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Non-binary"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         android:textStyle="italic"/>
                 </RadioGroup>
 
@@ -117,7 +117,7 @@
                     android:background="@color/light_grey"
                     android:padding="5dp"
                     android:text="Who do you want to date?"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     android:textStyle="bold|italic" />
                 <RadioGroup
                     android:layout_width="match_parent"
@@ -127,19 +127,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Male"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         android:textStyle="italic"/>
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Female"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         android:textStyle="italic"/>
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Non-binary"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         android:textStyle="italic"/>
                 </RadioGroup>
 
@@ -153,7 +153,7 @@
                     android:padding="6dp"
                     android:text="Confirm"
                     android:textColor="@color/white"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     android:textStyle="bold|italic" />
 
             </LinearLayout>
