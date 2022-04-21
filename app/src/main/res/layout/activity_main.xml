@@ -18,30 +18,33 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="218dp"
                     android:layout_height="200dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/logo"/>
+                    android:background="@drawable/logo" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Datinder"
+                    android:fontFamily="cursive"
+                    android:text="@string/app_name"
                     android:textSize="50sp"
-                    android:textStyle="bold|italic"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:fontFamily="cursive"
                     android:text="Match, Date and Meet New People!"
                     android:textSize="25sp"
-                    android:textStyle="bold|italic"/>
+                    android:textStyle="bold|italic" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/main_sign_in"
@@ -49,23 +52,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="150dp"
                     android:layout_marginBottom="2dp"
+                    android:background="@color/colorPrimary"
                     android:text="Sign in"
-                    android:textSize="25sp"
                     android:textColor="@color/white"
-                    android:textStyle="bold|italic"
-                    android:background="@color/error_stroke_color"/>
+                    android:textSize="25sp"
+                    android:textStyle="bold|italic" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/main_create_account"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="25dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="25dp"
+                    android:background="@color/colorPrimary"
                     android:text="Create Account"
-                    android:textSize="25sp"
                     android:textColor="@color/white"
-                    android:textStyle="bold|italic"
-                    android:background="@color/error_stroke_color"/>
+                    android:textSize="25sp"
+                    android:textStyle="bold|italic" />
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>
