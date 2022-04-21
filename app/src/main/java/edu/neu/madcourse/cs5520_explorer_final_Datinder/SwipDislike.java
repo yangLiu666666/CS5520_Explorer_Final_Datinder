@@ -28,7 +28,7 @@ public class SwipDislike extends AppCompatActivity {
 
         switch (profileUrl) {
             case "default":
-                Glide.with(context).load(R.drawable.man).into(dislike);
+                Glide.with(context).load(R.drawable.empty_user_profile).into(dislike);
                 break;
             default:
                 Glide.with(context).load(profileUrl).into(dislike);

@@ -32,7 +32,7 @@ public class SwipLike extends AppCompatActivity {
 
         switch (profileUrl) {
             case "default":
-                Glide.with(context).load(R.drawable.man).into(like);
+                Glide.with(context).load(R.drawable.empty_user_profile).into(like);
                 break;
             default:
                 Glide.with(context).load(profileUrl).into(like);
