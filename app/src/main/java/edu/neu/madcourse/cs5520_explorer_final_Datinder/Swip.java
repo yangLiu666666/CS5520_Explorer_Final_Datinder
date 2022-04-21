@@ -422,12 +422,12 @@ public class Swip extends AppCompatActivity {
 
 
                 //Display a banner when no cards are available to display
-//                TextView tv = (TextView)findViewById(R.id.noCardsBanner);
-//                if(rowItems.size() == 0) {
-//                    tv.setVisibility(View.VISIBLE);
-//                } else {
-//                    tv.setVisibility(View.INVISIBLE);
-//                }
+                TextView tv = (TextView)findViewById(R.id.noCardsBanner);
+                if(rowItems.size() == 0) {
+                    tv.setVisibility(View.VISIBLE);
+                } else {
+                    tv.setVisibility(View.INVISIBLE);
+                }
 
 
             }
