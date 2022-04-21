@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 
@@ -56,7 +57,8 @@ public class SwipLike extends AppCompatActivity {
 
     private void setupTopNavigationBar() {
         Log.d("SwipLike", "setupTopNavigationBar: setting up Top Navigation Bar");
-        BottomNavigationViewEx ex = findViewById(R.id.topNavBar);
+//        BottomNavigationViewEx ex = findViewById(R.id.topNavBar);
+        BottomNavigationView ex = findViewById(R.id.topNavBar);
         TopNavigationBar.logTopNav(ex);
         TopNavigationBar.setupTopBar(context, ex);
         Menu menu = ex.getMenu();

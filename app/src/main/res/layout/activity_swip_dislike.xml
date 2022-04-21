@@ -62,6 +62,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:background="@drawable/buttombutton"
+                android:onClick="DislikeBtn"
                 android:padding="10dp"
                 android:src="@drawable/dislike" />
 
@@ -73,7 +74,6 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/buttombutton"
-                android:onClick="LikeBtn"
                 android:padding="10dp"
                 android:src="@drawable/like" />
 
