@@ -42,7 +42,6 @@ dependencies {
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation 'com.google.firebase:firebase-analytics'
 
-    implementation'com.github.bumptech.glide:glide:3.7.0'
     implementation 'com.onesignal:OneSignal:4.6.2'
     implementation 'com.lorentzos.swipecards:library:1.0.9'
     implementation "com.github.dimorinny:show-case-card-view:0.0.1"

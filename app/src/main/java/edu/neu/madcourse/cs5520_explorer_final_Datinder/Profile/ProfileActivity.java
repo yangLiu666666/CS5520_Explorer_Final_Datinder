@@ -3,12 +3,12 @@ package edu.neu.madcourse.cs5520_explorer_final_Datinder.Profile;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -45,6 +46,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import edu.neu.madcourse.cs5520_explorer_final_Datinder.R;
 import edu.neu.madcourse.cs5520_explorer_final_Datinder.TopNavigationBar;
 
+@SuppressWarnings("ALL")
 public class ProfileActivity extends AppCompatActivity {
 
     //first icon in the navigation bar
@@ -86,8 +88,29 @@ public class ProfileActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
                 startActivityForResult(intent, 1);
+                new AlertDialog.Builder(ProfileActivity.this)
+                        .setTitle("Save image")
+                        .setMessage("Upload this image as your profile?")
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                saveUserInformation();
+//                                Toast.makeText(ProfileActivity.this, "saved", Toast.LENGTH_LONG).show();
+                                getUserName();
+//                                Toast.makeText(ProfileActivity.this, "getUserName", Toast.LENGTH_LONG).show();
+                                //keep in this screen
+                                Intent intentA = new Intent(ProfileActivity.this, ProfileActivity.class);
+                                startActivity(intentA);
+
+                            }
+                        })
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton("Cancel", null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
-            saveUserInformation();
+
         });
     }
 
@@ -164,14 +187,17 @@ public class ProfileActivity extends AppCompatActivity {
                     finish();
                 }
             });
-            uploadTask.addOnSuccessListener(taskSnapshot -> {
-                Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
-                while(!uri.isComplete()) {
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
+                    while(!uri.isComplete());
                     Uri downloadUrl = uri.getResult();
                     Map userInfo1 = new HashMap();
                     userInfo1.put("userImageUrl", downloadUrl.toString());
                     userDatabase.updateChildren(userInfo1);
                     finish();
+                    return;
                 }
             });
         }else{

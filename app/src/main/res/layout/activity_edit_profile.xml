@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:onClick="onClickUploadProfilePhoto"
+    android:orientation="vertical">
 
-<!--    include top back bar-->
+    <!--    include top back bar-->
     <include layout="@layout/top_back_bar" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true" >
+        android:fillViewport="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -34,7 +35,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-<!--                        divider before first item-->
+                        <!--                        divider before first item-->
                         <View
                             android:id="@+id/divider2"
                             android:layout_width="match_parent"
@@ -83,6 +84,8 @@
                                     android:id="@+id/image_view_1"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:tag="imageview1"
+                                    android:onClick="onClickUploadProfilePhoto"
                                     android:scaleType="fitXY" />
 
                                 <LinearLayout
@@ -93,10 +96,12 @@
                                     android:elevation="5dp">
 
                                     <Button
+                                        android:id="@+id/image_btn_1"
                                         android:layout_width="30dp"
                                         android:layout_height="30dp"
                                         android:background="@drawable/ic_add_btn"
-                                        android:elevation="5dp" />
+                                        android:elevation="5dp"
+                                        android:onClick="onClickUploadProfilePhoto" />
                                 </LinearLayout>
                             </RelativeLayout>
 
@@ -131,6 +136,8 @@
                                         android:id="@+id/image_view_2"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:tag="imageview2"
+                                        android:onClick="onClickUploadProfilePhoto"
                                         android:scaleType="fitXY" />
 
                                     <LinearLayout
@@ -141,10 +148,12 @@
                                         android:elevation="5dp">
 
                                         <Button
+                                            android:id="@+id/image_btn_2"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:background="@drawable/ic_add_btn"
-                                            android:elevation="5dp" />
+                                            android:elevation="5dp"
+                                            android:onClick="onClickUploadProfilePhoto" />
                                     </LinearLayout>
                                 </RelativeLayout>
                             </androidx.cardview.widget.CardView>
@@ -172,6 +181,8 @@
                                         android:id="@+id/image_view_3"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:tag="imageview3"
+                                        android:onClick="onClickUploadProfilePhoto"
                                         android:scaleType="fitXY" />
 
                                     <LinearLayout
@@ -182,10 +193,12 @@
                                         android:elevation="5dp">
 
                                         <Button
+                                            android:id="@+id/image_btn_3"
                                             android:layout_width="30dp"
                                             android:layout_height="30dp"
                                             android:background="@drawable/ic_add_btn"
-                                            android:elevation="5dp" />
+                                            android:elevation="5dp"
+                                            android:onClick="onClickUploadProfilePhoto" />
                                     </LinearLayout>
                                 </RelativeLayout>
                             </androidx.cardview.widget.CardView>
@@ -222,6 +235,8 @@
                                     android:id="@+id/image_view_4"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:tag="imageview4"
+                                    android:onClick="onClickUploadProfilePhoto"
                                     android:scaleType="fitXY" />
 
                                 <LinearLayout
@@ -232,10 +247,12 @@
                                     android:elevation="5dp">
 
                                     <Button
+                                        android:id="@+id/image_btn_4"
                                         android:layout_width="30dp"
                                         android:layout_height="30dp"
                                         android:background="@drawable/ic_add_btn"
-                                        android:elevation="5dp" />
+                                        android:elevation="5dp"
+                                        android:onClick="onClickUploadProfilePhoto" />
                                 </LinearLayout>
 
                             </RelativeLayout>
@@ -267,6 +284,7 @@
                                     android:id="@+id/image_view_5"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:tag="imageview5"
                                     android:scaleType="fitXY" />
 
                                 <LinearLayout
@@ -277,10 +295,12 @@
                                     android:elevation="5dp">
 
                                     <Button
+                                        android:id="@+id/image_btn_5"
                                         android:layout_width="30dp"
                                         android:layout_height="30dp"
                                         android:background="@drawable/ic_add_btn"
-                                        android:elevation="5dp" />
+                                        android:elevation="5dp"
+                                        android:onClick="onClickUploadProfilePhoto" />
                                 </LinearLayout>
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
@@ -309,6 +329,8 @@
                                     android:id="@+id/image_view_6"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:tag="imageview6"
+                                    android:onClick="onClickUploadProfilePhoto"
                                     android:scaleType="fitXY" />
 
                                 <LinearLayout
@@ -319,10 +341,12 @@
                                     android:elevation="5dp">
 
                                     <Button
+                                        android:id="@+id/image_btn_6"
                                         android:layout_width="30dp"
                                         android:layout_height="30dp"
                                         android:background="@drawable/ic_add_btn"
-                                        android:elevation="5dp" />
+                                        android:elevation="5dp"
+                                        android:onClick="onClickUploadProfilePhoto" />
                                 </LinearLayout>
                             </RelativeLayout>
                         </androidx.cardview.widget.CardView>
@@ -345,6 +369,7 @@
                         android:textStyle="bold" />
 
                     <EditText
+                        android:id="@+id/selfIntroText"
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
                         android:background="@android:color/transparent"
@@ -366,6 +391,7 @@
                         android:textStyle="bold" />
 
                     <EditText
+                        android:id="@+id/edit_SchoolText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
@@ -470,8 +496,8 @@
                         android:layout_height="wrap_content"
                         android:padding="5dp"
                         android:text="@string/privacy_settings"
-                        android:textStyle="bold"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"

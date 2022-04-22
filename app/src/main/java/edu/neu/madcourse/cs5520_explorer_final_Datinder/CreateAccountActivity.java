@@ -139,6 +139,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 userInfo.put("location", "default");
                                 userInfo.put("introduction", "default");
                                 userInfo.put("school", "default");
+                                userInfo.put("additionalProfileImageUrl", "default");
                                 currentUserDb.updateChildren(userInfo);
 
                                 //clear the fields
@@ -148,7 +149,6 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 Intent btnClick = new Intent(CreateAccountActivity.this, RegisterQuestionActivity.class);
                                 startActivity(btnClick);
                                 finish();
-                                return;
                             } else {
                                 Toast.makeText(CreateAccountActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }

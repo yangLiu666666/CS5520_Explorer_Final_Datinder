@@ -15,28 +15,41 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import edu.neu.madcourse.cs5520_explorer_final_Datinder.R;
 
+@SuppressWarnings("ALL")
 public class EditProfileActivity extends AppCompatActivity {
 
     private Button man, woman, nongender;
@@ -48,7 +61,19 @@ public class EditProfileActivity extends AppCompatActivity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private SharedPreferences permissionStatus;
+    private static final int REQUEST_PERMISSION_SETTING = 101;
+    private static final int PERMISSION_CALLBACK_CONSTANT = 100;
     private boolean sentToSettings = false;
+    private final static int REQUEST_CAMERA = 0;
+    private final static int REQUEST_GALLERY = 1;
+
+    private FirebaseAuth mAuth;
+    private String userId, additionalProfileImageUrl, additionalProfileImageUrlX, introduction, school;
+    private EditText selfIntroText, schoolText;
+    private Uri resultUri;
+
+
+
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -57,7 +82,6 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         permissionStatus = getSharedPreferences("permissionStatus", MODE_PRIVATE);
-        requestMultiplePermissions();
 
         imageView1 = findViewById(R.id.image_view_1);
         imageView2 = findViewById(R.id.image_view_2);
@@ -65,16 +89,30 @@ public class EditProfileActivity extends AppCompatActivity {
         imageView4 = findViewById(R.id.image_view_4);
         imageView5 = findViewById(R.id.image_view_5);
         imageView6 = findViewById(R.id.image_view_6);
+        //default imageView to first one
+        imageView = findViewById(R.id.image_view_1);
         man = findViewById(R.id.man_button);
         woman = findViewById(R.id.woman_button);
         nongender = findViewById(R.id.nongender_button);
         man_text = findViewById(R.id.man_text);
         women_text = findViewById(R.id.woman_text);
         nongender_text = findViewById(R.id.nongender_text);
+        selfIntroText = findViewById(R.id.selfIntroText);
+        schoolText = findViewById(R.id.edit_SchoolText);
+
         back = findViewById(R.id.back);
+        mAuth = FirebaseAuth.getInstance();
+        if (mAuth != null && mAuth.getCurrentUser() != null) {
+            userId = mAuth.getCurrentUser().getUid();
+        }
+        userDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+
+        getUserInfo();
 
         //if click back imageButton => go back
-        back.setOnClickListener(view -> onBackPressed());
+        back.setOnClickListener(view -> {
+            onBackPressed();
+        });
 
         //set up gender selection
         woman.setOnClickListener(v -> {
@@ -107,41 +145,67 @@ public class EditProfileActivity extends AppCompatActivity {
             woman.setBackgroundResource(R.drawable.ic_unselected);
         });
 
+        };
 
-        imageView1.setOnClickListener(v -> {
-            imageView = imageView1;
-            proceedAfterPermission();
+    @Override
+    public void onBackPressed() {
+        saveUserTextInfo();
+        super.onBackPressed();
+    }
 
-        });
-        imageView2.setOnClickListener(v -> {
-            imageView = imageView2;
-            proceedAfterPermission();
+    //set up onClick for edit profile imageview and buttons
+    public void onClickUploadProfilePhoto(View view) {
 
-        });
-
-        imageView3.setOnClickListener(v -> {
-            imageView = imageView3;
-            proceedAfterPermission();
-
-        });
-
-        imageView4.setOnClickListener(v -> {
-            imageView = imageView4;
-            proceedAfterPermission();
-
-        });
-
-        imageView5.setOnClickListener(v -> {
-            imageView = imageView5;
-            proceedAfterPermission();
-
-        });
-
-        imageView6.setOnClickListener(v -> {
-            imageView = imageView6;
-            proceedAfterPermission();
-
-        });
+        switch (view.getId()) {
+            case R.id.image_view_1:
+                imageView = imageView1;
+                requestMultiplePermissions();
+                break;
+            case R.id.image_view_2:
+                imageView = imageView2;
+                requestMultiplePermissions();
+                break;
+            case R.id.image_view_3:
+                imageView = imageView3;
+                requestMultiplePermissions();
+                break;
+            case R.id.image_view_4:
+                imageView = imageView3;
+                requestMultiplePermissions();
+                break;
+            case R.id.image_view_5:
+                imageView = imageView3;
+                requestMultiplePermissions();
+                break;
+            case R.id.image_view_6:
+                imageView = imageView3;
+                requestMultiplePermissions();
+                break;
+            case R.id.image_btn_1:
+                imageView = imageView1;
+                requestMultiplePermissions();
+                break;
+            case R.id.image_btn_2:
+                imageView = imageView2;
+                requestMultiplePermissions();
+                break;
+            case R.id.image_btn_3:
+                imageView = imageView3;
+                requestMultiplePermissions();
+                break;
+            case R.id.image_btn_4:
+                imageView = imageView4;
+                requestMultiplePermissions();
+                break;
+            case R.id.image_btn_5:
+                imageView = imageView5;
+                requestMultiplePermissions();
+                break;
+            case R.id.image_btn_6:
+                imageView = imageView6;
+                requestMultiplePermissions();
+                break;
+        }
     }
 
     /**
@@ -159,77 +223,129 @@ public class EditProfileActivity extends AppCompatActivity {
                     || ActivityCompat.shouldShowRequestPermissionRationale(EditProfileActivity.this, permissionsRequired[2])) {
                 //show alertDialog asking for permission
                 showAlertDialog1();
+                //getBoolean function: retrieve a boolean value from the preferences
             } else if (permissionStatus.getBoolean(permissionsRequired[0], false)) {
                 //redirect to settings after showing info why need the permission
                 //previously cancelled
                 showAlertDialog2();
             } else {
                 //request permission
-                ActivityCompat.requestPermissions(EditProfileActivity.this, permissionsRequired, 100);
+                ActivityCompat.requestPermissions(EditProfileActivity.this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT);
             }
             //update SharedPreferences
             SharedPreferences.Editor editor = permissionStatus.edit();
-            editor.putBoolean(permissionsRequired[0], true).commit();
+            editor.putBoolean(permissionsRequired[0], true);
+            editor.commit();
+//            editor.putBoolean(permissionsRequired[1], true).commit();
+//            editor.putBoolean(permissionsRequired[2], true).commit();
         } else {
             //means already have this permission
             //nothing to show period => continue
+            Toast.makeText(getApplicationContext(), "Permission already granted.", Toast.LENGTH_SHORT).show();
+
+            proceedAfterPermission();
+        }
+    }
+
+    @Override
+    public void  onRequestPermissionsResult(int requestCode, String[] permissionsRequired, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissionsRequired, grantResults);
+        Toast.makeText(getApplicationContext(), grantResults.toString(), Toast.LENGTH_LONG).show();
+        if (requestCode == PERMISSION_CALLBACK_CONSTANT && grantResults.length > 0) {
+            boolean allgranted = false;
+            for (int i=0; i < grantResults.length; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    allgranted = true;
+                } else {
+                    allgranted = false;
+                    break;
+                }
+            }
+            if (allgranted) {
+                proceedAfterPermission();
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(EditProfileActivity.this, permissionsRequired[0])
+                    || ActivityCompat.shouldShowRequestPermissionRationale(EditProfileActivity.this, permissionsRequired[1])
+                    || ActivityCompat.shouldShowRequestPermissionRationale(EditProfileActivity.this, permissionsRequired[2])) {
+                showAlertDialog1();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Access Denied.", Toast.LENGTH_LONG).show();
         }
     }
 
     private void proceedAfterPermission() {
-        final CharSequence[] menu = {"Take Photo", "Choose from Photo Gallery", "Cancel"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
+        try {
+            final CharSequence[] menu = {"Take Photo", "Choose from Gallery", "Cancel"};
+            AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
 
-        builder.setTitle("Add Photo!");
+            builder.setTitle("Add Photo");
 
-        builder.setItems(menu, (dialog, item) -> {
+            builder.setItems(menu, (DialogInterface dialog, int item) -> {
 
-            if (menu[item].equals("Take Photo")) {
-                cameraIntent();
-            } else if (menu[item].equals("Choose from Gallery")) {
-                galleryIntent();
-            } else if (menu[item].equals("Cancel")) {
-                dialog.dismiss();
-            }
-        });
-        builder.show();
+                if (menu[item].equals("Take Photo")) {
+                    dialog.dismiss();
+                    cameraIntent();
+
+                } else if (menu[item].equals("Choose from Gallery")) {
+//                    Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+//                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                    startActivityForResult(pickPhoto, 1);
+                    dialog.dismiss();
+                    galleryIntent();
+                } else if (menu[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
+        } catch (Exception e) {
+            Toast.makeText(EditProfileActivity.this, "Permission error", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("deprecation")
     private void cameraIntent() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 0);
+        Intent takePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(takePhoto, REQUEST_CAMERA);
     }
 
     @SuppressWarnings("deprecation")
     private void galleryIntent() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);//
-        startActivityForResult(Intent.createChooser(intent, "Select File"), 1);
+        Intent pickPhoto = new Intent();
+        pickPhoto.setType("image/*");
+        pickPhoto.setAction(Intent.ACTION_GET_CONTENT);//
+        startActivityForResult(Intent.createChooser(pickPhoto, "Select File"), REQUEST_GALLERY);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 101) {
+        if (requestCode == REQUEST_PERMISSION_SETTING) {
             if (ActivityCompat.checkSelfPermission(EditProfileActivity.this, permissionsRequired[0]) == PackageManager.PERMISSION_GRANTED) {
-                //permission already granted
+                //Got Permission
                 proceedAfterPermission();
             }
         }
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 1) //select file
+            if (requestCode == REQUEST_GALLERY)
                 onSelectFromGalleryResult(data);
-            else if (requestCode == 0) //request camera
+            else if (requestCode == REQUEST_CAMERA)
                 onCaptureImageResult(data);
         }
+//        if (resultCode == Activity.RESULT_OK) {
+//            if (requestCode == 1) //select file
+//                onSelectFromGalleryResult(data);
+//            else if (requestCode == 0) //request camera
+//                onCaptureImageResult(data);
+//        }
     }
 
     private void onCaptureImageResult(Intent data) {
-        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        final Uri imageUri = data.getData();
+        resultUri = imageUri;
+        Bitmap bm = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        bm.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
 
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
@@ -244,12 +360,15 @@ public class EditProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        imageView.setImageBitmap(thumbnail);
+        imageView.setImageBitmap(bm);
+        saveUserImageInformation(imageView);
     }
 
     private void onSelectFromGalleryResult(Intent data) {
         Bitmap bm = null;
         if (data != null) {
+            final Uri imageUri = data.getData();
+            resultUri = imageUri;
             try {
                 bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
             } catch (IOException e) {
@@ -257,6 +376,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         }
         imageView.setImageBitmap(bm);
+        saveUserImageInformation(imageView);
     }
 
     private void showAlertDialog1() {
@@ -265,7 +385,7 @@ public class EditProfileActivity extends AppCompatActivity {
         builder.setMessage("Camera and Location permissions need to be granted.");
         builder.setPositiveButton("Grant", (dialogInterface, i) -> {
             dialogInterface.cancel();
-            ActivityCompat.requestPermissions(EditProfileActivity.this, permissionsRequired, 100);
+            ActivityCompat.requestPermissions(EditProfileActivity.this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT);
         });
         builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel());
         builder.show();
@@ -282,11 +402,150 @@ public class EditProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             Uri uri = Uri.fromParts("package", getPackageName(), null);
             intent.setData(uri);
-            startActivityForResult(intent, 101);
+            startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
             Toast.makeText(getBaseContext(), "Go to PERMISSIONS to grant Camera and Location permissions.", Toast.LENGTH_LONG).show();
         });
         builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel());
         builder.show();
+    }
+
+
+    private void getUserInfo() {
+        userDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists() && snapshot.getChildrenCount()>0) {
+                    Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
+                    if (map.get("introduction") != null) {
+                        introduction = map.get("introduction").toString();
+                        selfIntroText.setText(introduction);
+                    }
+                    if (map.get("school") != null) {
+                        school = map.get("school").toString();
+                        schoolText.setText(school);
+                    }
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        userDatabase.child("additionalProfileImageUrl").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
+                    Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
+                    if (map.get("imageview1") != null) {
+                        additionalProfileImageUrlX = map.get("imageview1").toString();
+                        Glide.with(getApplication()).load(additionalProfileImageUrlX).into(imageView1);
+                    }
+                    if (map.get("imageview2") != null) {
+                        additionalProfileImageUrlX = map.get("imageview2").toString();
+                        Glide.with(getApplication()).load(additionalProfileImageUrlX).into(imageView2);
+                    }
+                    if (map.get("imageview3") != null) {
+                        additionalProfileImageUrlX = map.get("imageview3").toString();
+                        Glide.with(getApplication()).load(additionalProfileImageUrlX).into(imageView3);
+                    }
+                    if (map.get("imageview4") != null) {
+                        additionalProfileImageUrlX = map.get("imageview4").toString();
+                        Glide.with(getApplication()).load(additionalProfileImageUrlX).into(imageView4);
+                    }
+                    if (map.get("imageview5") != null) {
+                        additionalProfileImageUrlX = map.get("imageview5").toString();
+                        Glide.with(getApplication()).load(additionalProfileImageUrlX).into(imageView5);
+                    }
+                    if (map.get("imageview6") != null) {
+                        additionalProfileImageUrlX = map.get("imageview6").toString();
+                        Glide.with(getApplication()).load(additionalProfileImageUrlX).into(imageView6);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+    }
+
+    private void saveUserTextInfo() {
+        introduction = selfIntroText.getText().toString();
+        school = schoolText.getText().toString();
+
+        //save the two EditText content
+        userDatabase.child("introduction").setValue(introduction);
+        userDatabase.child("school").setValue(school);
+    }
+
+
+    private void saveUserImageInformation(ImageView imageView) {
+        //save uploaded image
+        if(resultUri != null){
+            StorageReference filepath = FirebaseStorage.getInstance().getReference().child("additionalProfileImages").child(userId);
+            Bitmap bitmap = null;
+
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getApplication().getContentResolver(), resultUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream);
+            byte[] data = stream.toByteArray();
+            UploadTask uploadTask = filepath.putBytes(data);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    finish();
+                }
+            });
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
+                    while(!uri.isComplete());
+                    Uri downloadUrl = uri.getResult();
+                    //save this image under additionalProfileImageUrl's child
+                    Map additionalProfileImageUrlInfo = new HashMap();
+                    if ("imageview1".equals(imageView.getTag())) {
+                        additionalProfileImageUrlInfo.put("imageview1", downloadUrl.toString());
+                    } else if ("imageview2".equals(imageView.getTag())) {
+                        additionalProfileImageUrlInfo.put("imageview2", downloadUrl.toString());
+                    } else if ("imageview3".equals(imageView.getTag())) {
+                        additionalProfileImageUrlInfo.put("imageview3", downloadUrl.toString());
+                    } else if ("imageview4".equals(imageView.getTag())) {
+                        additionalProfileImageUrlInfo.put("imageview4", downloadUrl.toString());
+                    } else if ("imageview5".equals(imageView.getTag())) {
+                        additionalProfileImageUrlInfo.put("imageview5", downloadUrl.toString());
+                    } else if ("imageview6".equals(imageView.getTag())) {
+                        additionalProfileImageUrlInfo.put("imageview6", downloadUrl.toString());
+                    }
+//                    additionalProfileImageUrlInfo.put(imageView.toString(), downloadUrl.toString());
+                    userDatabase.child("additionalProfileImageUrl").updateChildren(additionalProfileImageUrlInfo);
+                    Toast.makeText(getApplicationContext(), "Image saved successfully", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(EditProfileActivity.this, EditProfileActivity.class);
+                    startActivity(intent);
+                    return;
+                }
+            });
+        }else{
+            Toast.makeText(getApplicationContext(), "Error! No image was chosen", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ImageView) {
+            ImageView other = (ImageView) obj;
+            return this.equals(other);
+        }
+        return false;
     }
 
     @Override
