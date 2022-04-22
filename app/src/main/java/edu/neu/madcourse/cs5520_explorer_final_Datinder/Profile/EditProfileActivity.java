@@ -68,7 +68,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private final static int REQUEST_GALLERY = 1;
 
     private FirebaseAuth mAuth;
-    private String userId, additionalProfileImageUrl, additionalProfileImageUrlX, introduction, school;
+    private String userId, additionalProfileImageUrl, additionalProfileImageUrlX, introduction, school, imageviewString;
     private EditText selfIntroText, schoolText;
     private Uri resultUri;
 
@@ -145,7 +145,52 @@ public class EditProfileActivity extends AppCompatActivity {
             woman.setBackgroundResource(R.drawable.ic_unselected);
         });
 
-        };
+        imageView1.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                showAlertDialogForDelete(imageView1, "imageview1");
+                return true;
+            }
+        });
+
+        imageView2.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                showAlertDialogForDelete(imageView2, "imageview2");
+                return true;
+            }
+        });
+
+        imageView3.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                showAlertDialogForDelete(imageView3, "imageview3");
+                return true;
+            }
+        });
+        imageView4.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                showAlertDialogForDelete(imageView4, "imageview4");
+                return true;
+            }
+        });
+        imageView5.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                showAlertDialogForDelete(imageView5, "imageview5");
+                return true;
+            }
+        });
+        imageView6.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                showAlertDialogForDelete(imageView6, "imageview6");
+                return true;
+            }
+        });
+
+    };
 
     @Override
     public void onBackPressed() {
@@ -153,9 +198,23 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+
+    public void showAlertDialogForDelete(ImageView imageView, String imageviewString) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
+        builder.setTitle("Delete image?");
+        builder.setMessage("Choose the options below to delete this image");
+        builder.setPositiveButton("Delete", (dialogInterface, i) -> {
+            dialogInterface.cancel();
+            imageView.setImageDrawable(null);
+            userDatabase.child("additionalProfileImageUrl").child(imageviewString).setValue(null);
+        });
+        builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel());
+        builder.show();
+    }
+
+
     //set up onClick for edit profile imageview and buttons
     public void onClickUploadProfilePhoto(View view) {
-
         switch (view.getId()) {
             case R.id.image_view_1:
                 imageView = imageView1;
@@ -332,12 +391,6 @@ public class EditProfileActivity extends AppCompatActivity {
             else if (requestCode == REQUEST_CAMERA)
                 onCaptureImageResult(data);
         }
-//        if (resultCode == Activity.RESULT_OK) {
-//            if (requestCode == 1) //select file
-//                onSelectFromGalleryResult(data);
-//            else if (requestCode == 0) //request camera
-//                onCaptureImageResult(data);
-//        }
     }
 
     private void onCaptureImageResult(Intent data) {

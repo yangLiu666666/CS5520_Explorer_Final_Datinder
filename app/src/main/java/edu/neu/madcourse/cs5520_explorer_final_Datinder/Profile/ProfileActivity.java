@@ -78,7 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         userDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
 
-        getUserName();
+        getUserInfo();
 
         circleImageView.setOnClickListener(view -> {
             if (!checkPermission()) {  // this line checks permission everytime you access this activity
@@ -88,34 +88,13 @@ public class ProfileActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
                 startActivityForResult(intent, 1);
-                new AlertDialog.Builder(ProfileActivity.this)
-                        .setTitle("Save image")
-                        .setMessage("Upload this image as your profile?")
-                        // Specifying a listener allows you to take an action before dismissing the dialog.
-                        // The dialog is automatically dismissed when a dialog button is clicked.
-                        .setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                saveUserInformation();
-//                                Toast.makeText(ProfileActivity.this, "saved", Toast.LENGTH_LONG).show();
-                                getUserName();
-//                                Toast.makeText(ProfileActivity.this, "getUserName", Toast.LENGTH_LONG).show();
-                                //keep in this screen
-                                Intent intentA = new Intent(ProfileActivity.this, ProfileActivity.class);
-                                startActivity(intentA);
-
-                            }
-                        })
-                        // A null listener allows the button to dismiss the dialog and take no further action.
-                        .setNegativeButton("Cancel", null)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
             }
 
         });
     }
 
     //set up name in the textview
-    private void getUserName() {
+    private void getUserInfo() {
         userDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -212,7 +191,31 @@ public class ProfileActivity extends AppCompatActivity {
             final Uri imageUri = data.getData();
             resultUri = imageUri;
             circleImageView.setImageURI(resultUri);
+            showAlertDialogToSaveImage();
         }
+    }
+
+    public void showAlertDialogToSaveImage() {
+        new AlertDialog.Builder(ProfileActivity.this)
+                .setTitle("Save image")
+                .setMessage("Upload this image as your profile?")
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        saveUserInformation();
+//                                Toast.makeText(ProfileActivity.this, "saved", Toast.LENGTH_LONG).show();
+                        getUserInfo();
+//                                Toast.makeText(ProfileActivity.this, "getUserInfo", Toast.LENGTH_LONG).show();
+                        //keep in this screen
+                        Intent intentA = new Intent(ProfileActivity.this, ProfileActivity.class);
+                        startActivity(intentA);
+                    }
+                })
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton("Cancel", null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
 
