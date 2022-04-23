@@ -372,7 +372,7 @@ public class Swip extends AppCompatActivity {
                         if (!dataSnapshot.child("userImageUrl").getValue().equals("default")) {
                             userImageUrl = dataSnapshot.child("userImageUrl").getValue().toString();
                         }
-                        Card item = new Card(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), userImageUrl);
+                        Card item = new Card(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), userImageUrl, dataSnapshot.child("introduction").getValue().toString(), dataSnapshot.child("school").getValue().toString());
                         rowItems.add(item);
                         arrayAdapter.notifyDataSetChanged();
                     }

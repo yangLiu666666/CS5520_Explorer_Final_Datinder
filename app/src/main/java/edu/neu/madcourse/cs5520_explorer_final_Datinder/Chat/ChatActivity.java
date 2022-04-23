@@ -50,13 +50,14 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView.Adapter mChatAdapter;
     private RecyclerView.LayoutManager mChatLayoutManager;
 
+    private TextView schoolText, storyText;
     private EditText mSendEditText;
     private ImageButton mBack;
     private ImageButton mSendButton;
 
     private String notification;
     private String currentUserID, matchId, chatId;
-    private String matchName, matchGive, matchNeed, matchBudget, matchProfile;
+    private String matchName, matchStory, matchSchool;
     private String lastMessage, lastTimeStamp;
     private String  message, createdByUser, isSeen, messageId, currentUserName, matchIcon;
     private Boolean currentUserBoolean;
@@ -69,7 +70,6 @@ public class ChatActivity extends AppCompatActivity {
 
         matchId = getIntent().getExtras().getString("matchId");
         matchName = getIntent().getExtras().getString("matchName");
-        matchProfile = getIntent().getExtras().getString("profile");
         currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         //chat id of the current match
@@ -98,6 +98,7 @@ public class ChatActivity extends AppCompatActivity {
         mBack = findViewById(R.id.chatBack);
 
         mSendButton = findViewById(R.id.send);
+
 
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,6 +217,8 @@ public class ChatActivity extends AppCompatActivity {
         TextView mMatchNameTextView= (TextView) findViewById(R.id.chattoolbartag);
         mMatchNameTextView.setText(matchName);
         ImageView mMatchImage = (ImageView) findViewById(R.id.MatchImage);
+
+
         if(matchIcon != null &&  !matchIcon.equals("default")){
             Glide.with(this).load(matchIcon).into(mMatchImage);
         }
@@ -228,6 +231,12 @@ public class ChatActivity extends AppCompatActivity {
         View popupView = inflater.inflate(R.layout.item, null);
         TextView name = (TextView) popupView.findViewById(R.id.name);
         ImageView image = (ImageView) popupView.findViewById(R.id.image);
+        TextView school = (TextView) popupView.findViewById(R.id.schoolText);
+        school.setText(matchSchool);
+
+        TextView story = (TextView) popupView.findViewById(R.id.storyText);
+        story.setText(matchStory);
+
         name.setText(matchName);
 
         if(matchIcon != null &&  !matchIcon.equals("default")){

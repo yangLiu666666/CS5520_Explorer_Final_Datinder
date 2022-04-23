@@ -105,17 +105,19 @@
                     android:paddingLeft="10dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:text="I am "
+                    android:text="My School"
                     android:textColor="#111111"
                     android:textSize="20sp" />
 
-                <ImageView
-                    android:id="@+id/giveImage"
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:adjustViewBounds="true"
-                    android:paddingLeft="10dp"
-                    android:scaleType="fitXY" />
+                <TextView
+                    android:id="@+id/schoolText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/devider"
+                    android:inputType="text"
+                    android:padding="20dp"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -124,37 +126,20 @@
                     android:paddingLeft="10dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:text="I want to find"
+                    android:text="About me"
                     android:textColor="#111111"
                     android:textSize="20sp" />
 
-                <ImageView
-                    android:id="@+id/needImage"
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:adjustViewBounds="true"
-                    android:paddingLeft="10dp"
-                    android:scaleType="fitXY" />
-
                 <TextView
+                    android:id="@+id/storyText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#EEEEEE"
-                    android:paddingLeft="10dp"
-                    android:text="My budget is:"
-                    android:textSize="20sp"
-                    android:visibility="gone" />
+                    android:background="@color/devider"
+                    android:inputType="text"
+                    android:padding="20dp"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
 
-                <TextView
-                    android:id="@+id/budget"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="$"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:textSize="20sp"
-                    android:visibility="gone" />
 
             </LinearLayout>
 

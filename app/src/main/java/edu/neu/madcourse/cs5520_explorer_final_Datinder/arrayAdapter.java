@@ -32,6 +32,12 @@ public class arrayAdapter extends ArrayAdapter<Card>{
         ImageView image = (ImageView) convertView.findViewById(R.id.image);
         name.setText(card_item.getName());
 
+        TextView school = (TextView) convertView.findViewById(R.id.schoolText);
+        school.setText(card_item.getSchool());
+
+        TextView story = (TextView) convertView.findViewById(R.id.storyText);
+        story.setText(card_item.getStory());
+
        /* TextView need = (TextView) convertView.findViewById(R.id.need);
         TextView give = (TextView) convertView.findViewById(R.id.give);*/
 //        TextView budget = (TextView) convertView.findViewById(R.id.budget);

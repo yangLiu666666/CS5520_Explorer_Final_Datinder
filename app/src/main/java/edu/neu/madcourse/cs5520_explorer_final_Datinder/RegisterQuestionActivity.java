@@ -44,7 +44,7 @@ import com.google.firebase.storage.UploadTask;
 
 @SuppressWarnings("ALL")
 public class RegisterQuestionActivity extends AppCompatActivity {
-    private EditText userName;
+    private EditText userName, userStory, userSchool;
     private ProgressBar spinner;
     private Button confirm;
     //private ImageButton back;
@@ -53,7 +53,7 @@ public class RegisterQuestionActivity extends AppCompatActivity {
     private DatabaseReference userDatabase;
     private RadioGroup gender, likeGender;
 
-    private String userId, nameInfo, userImageUrl, genderInfo, likeGenderInfo;
+    private String userId, nameInfo, userImageUrl, genderInfo, schoolInfo, storyInfo;
     private Uri resultUri;
 
     @Override
@@ -65,10 +65,12 @@ public class RegisterQuestionActivity extends AppCompatActivity {
         spinner.setVisibility(View.GONE);
         //back = findViewById(R.id.settingsBack);
         userName = findViewById(R.id.profile_name);
+        userStory = findViewById(R.id.story);
+        userSchool = findViewById(R.id.school_name);
         userImage = findViewById(R.id.user_image);
         confirm = findViewById(R.id.confirm);
         gender = findViewById(R.id.gender_radio_group);
-        likeGender = findViewById(R.id.date_gender);
+//        likeGender = findViewById(R.id.date_gender);
 
         mAuth = FirebaseAuth.getInstance();
         if(mAuth != null && mAuth.getCurrentUser()!= null)
@@ -167,13 +169,21 @@ public class RegisterQuestionActivity extends AppCompatActivity {
                         userName.setText(nameInfo);
                     }
 
-                    if(map.get("gender")!=null){
+                    if(map.get("gender")!=null) {
                         genderInfo = map.get("gender").toString();
                     }
 
-                    if(map.get("likeGender")!=null){
-                        likeGenderInfo = map.get("likeGender").toString();
+                    if (map.get("introduction") != null) {
+                        storyInfo = map.get("introduction").toString();
                     }
+
+                    if (map.get("school") != null) {
+                        schoolInfo = map.get("school").toString();
+                    }
+
+//                    if(map.get("likeGender")!=null){
+//                        likeGenderInfo = map.get("likeGender").toString();
+//                    }
 
 
                     //https://guides.codepath.com/android/Displaying-Images-with-the-Glide-Library
@@ -202,9 +212,13 @@ public class RegisterQuestionActivity extends AppCompatActivity {
 
     private void saveUserInformation() {
         nameInfo = userName.getText().toString();
+        schoolInfo = userSchool.getText().toString();
+        storyInfo = userStory.getText().toString();
 
         Map userInfo = new HashMap();
         userInfo.put("name", nameInfo);
+        userInfo.put("introduction", storyInfo);
+        userInfo.put("school", schoolInfo);
 
         userDatabase.updateChildren(userInfo);
         if(resultUri != null){
