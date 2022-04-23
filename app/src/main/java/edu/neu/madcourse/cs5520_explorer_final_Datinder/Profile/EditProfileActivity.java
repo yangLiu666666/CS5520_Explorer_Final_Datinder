@@ -1,6 +1,5 @@
 package edu.neu.madcourse.cs5520_explorer_final_Datinder.Profile;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -57,9 +56,9 @@ public class EditProfileActivity extends AppCompatActivity {
     private TextView man_text, women_text, nongender_text;
     private ImageView imageView1, imageView2, imageView3, imageView4, imageView5, imageView6, imageView;
     private DatabaseReference userDatabase;
-    private final String[] permissionsRequired = new String[]{Manifest.permission.CAMERA,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private final String[] permissionsRequired = new String[]{android.Manifest.permission.CAMERA,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private SharedPreferences permissionStatus;
     private static final int REQUEST_PERMISSION_SETTING = 101;
     private static final int PERMISSION_CALLBACK_CONSTANT = 100;
@@ -274,61 +273,48 @@ public class EditProfileActivity extends AppCompatActivity {
      * update sharedPreferences
      */
     private void requestMultiplePermissions() {
-        if (ActivityCompat.checkSelfPermission(EditProfileActivity.this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(EditProfileActivity.this, permissionsRequired[1]) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(EditProfileActivity.this, permissionsRequired[2]) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(EditProfileActivity.this, permissionsRequired[0])
-                    || ActivityCompat.shouldShowRequestPermissionRationale(EditProfileActivity.this, permissionsRequired[1])
-                    || ActivityCompat.shouldShowRequestPermissionRationale(EditProfileActivity.this, permissionsRequired[2])) {
-                //show alertDialog asking for permission
-                showAlertDialog1();
-                //getBoolean function: retrieve a boolean value from the preferences
-            } else if (permissionStatus.getBoolean(permissionsRequired[0], false)) {
-                //redirect to settings after showing info why need the permission
-                //previously cancelled
-                showAlertDialog2();
-            } else {
-                //request permission
+        for (String permission: permissionsRequired) {
+            if (ActivityCompat.checkSelfPermission(EditProfileActivity.this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED
+                    || ActivityCompat.checkSelfPermission(EditProfileActivity.this, permissionsRequired[1]) != PackageManager.PERMISSION_GRANTED
+                    || ActivityCompat.checkSelfPermission(EditProfileActivity.this, permissionsRequired[2]) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(EditProfileActivity.this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT);
+            } else {
+                //means already have this permission
+                //nothing to show => continue
+                Toast.makeText(getApplicationContext(), "Permission already granted.", Toast.LENGTH_SHORT).show();
+                proceedAfterPermission();
             }
-            //update SharedPreferences
-            SharedPreferences.Editor editor = permissionStatus.edit();
-            editor.putBoolean(permissionsRequired[0], true);
-            editor.commit();
-//            editor.putBoolean(permissionsRequired[1], true).commit();
-//            editor.putBoolean(permissionsRequired[2], true).commit();
-        } else {
-            //means already have this permission
-            //nothing to show period => continue
-            Toast.makeText(getApplicationContext(), "Permission already granted.", Toast.LENGTH_SHORT).show();
-
-            proceedAfterPermission();
         }
     }
 
     @Override
-    public void  onRequestPermissionsResult(int requestCode, String[] permissionsRequired, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissionsRequired, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissionsRequired, grantResults);
-        Toast.makeText(getApplicationContext(), grantResults.toString(), Toast.LENGTH_LONG).show();
-        if (requestCode == PERMISSION_CALLBACK_CONSTANT && grantResults.length > 0) {
+        if (requestCode == PERMISSION_CALLBACK_CONSTANT && grantResults.length >= 0) {
             boolean allgranted = false;
-            for (int i=0; i < grantResults.length; i++) {
-                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                    allgranted = true;
-                } else {
-                    allgranted = false;
-                    break;
+            if (grantResults.length > 0) {
+                for (int i=0; i < grantResults.length; i++) {
+                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                        allgranted = true;
+                    } else {
+                        allgranted = false;
+                        break;
+                    }
                 }
             }
             if (allgranted) {
+                Intent intent = new Intent(EditProfileActivity.this, EditProfileActivity.class);
+                startActivity(intent);
                 proceedAfterPermission();
             } else if (ActivityCompat.shouldShowRequestPermissionRationale(EditProfileActivity.this, permissionsRequired[0])
                     || ActivityCompat.shouldShowRequestPermissionRationale(EditProfileActivity.this, permissionsRequired[1])
                     || ActivityCompat.shouldShowRequestPermissionRationale(EditProfileActivity.this, permissionsRequired[2])) {
                 showAlertDialog1();
+            } else {
+                //denied with "never ask again" => got go to settings
+                showAlertDialog2();
+                Toast.makeText(getApplicationContext(), "Access Denied. Go to Settings to allow permissions.", Toast.LENGTH_LONG).show();
             }
-        } else {
-            Toast.makeText(getApplicationContext(), "Access Denied.", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -435,7 +421,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private void showAlertDialog1() {
         AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
         builder.setTitle("Permissions needed to proceed");
-        builder.setMessage("Camera and Location permissions need to be granted.");
+        builder.setMessage("Camera and Storage permissions need to be granted.");
         builder.setPositiveButton("Grant", (dialogInterface, i) -> {
             dialogInterface.cancel();
             ActivityCompat.requestPermissions(EditProfileActivity.this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT);
@@ -447,16 +433,16 @@ public class EditProfileActivity extends AppCompatActivity {
     @SuppressWarnings("deprecation")
     private void showAlertDialog2() {
         AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
-        builder.setTitle("Permissions needed to granted");
-        builder.setMessage("Camera and Location permissions need to be granted.");
-        builder.setPositiveButton("Grant", (dialogInterface, i) -> {
+        builder.setTitle("Please allow Permissions to proceed");
+        builder.setMessage("Camera and Storage permissions need to be granted.");
+        builder.setPositiveButton("Go to Settings", (dialogInterface, i) -> {
             dialogInterface.cancel();
             sentToSettings = true;
             Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             Uri uri = Uri.fromParts("package", getPackageName(), null);
             intent.setData(uri);
             startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
-            Toast.makeText(getBaseContext(), "Go to PERMISSIONS to grant Camera and Location permissions.", Toast.LENGTH_LONG).show();
+//            Toast.makeText(getBaseContext(), "Go to PERMISSIONS to grant Camera and Storage permissions.", Toast.LENGTH_LONG).show();
         });
         builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel());
         builder.show();
