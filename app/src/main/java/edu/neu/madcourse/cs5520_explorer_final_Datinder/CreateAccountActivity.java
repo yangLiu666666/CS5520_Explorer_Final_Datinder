@@ -4,11 +4,20 @@ package edu.neu.madcourse.cs5520_explorer_final_Datinder;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.icu.util.Calendar;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,16 +43,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CreateAccountActivity extends AppCompatActivity {
+    private static final int REQUEST_LOCATION = 1;
     private Button createAccount;
     private ProgressBar spinner;
     private EditText email, password, name;
     private RadioGroup gender;
     private TextView dateBirth, existAccount;
-    private String ageInfo;
+    private String ageInfo, location;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+edu+";
     private static final String TAG = "RegisterActivity";
+    private String latitude = "Latitude: %s";
+    private String longitude = "Longitude: %s";
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +117,13 @@ public class CreateAccountActivity extends AppCompatActivity {
             }
         });
 
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            noGpsMessage();
+        } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            getLocation();
+        }
+
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,6 +142,8 @@ public class CreateAccountActivity extends AppCompatActivity {
                 final String genderInformation = genderInfo.getText().toString();
                 final String birthDay = dateBirth.toString();
 
+                final String locationInfo = getLocation();
+
                 if (checkInputs(emailInfo, nameInfo, passwordInfo, genderInformation, birthDay)) {
                     mAuth.createUserWithEmailAndPassword(emailInfo, passwordInfo).addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -136,7 +158,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 userInfo.put("userImageUrl", "default");
                                 userInfo.put("gender", genderInformation);
                                 userInfo.put("age", ageInfo);
-                                userInfo.put("location", "default");
+                                userInfo.put("location", locationInfo);
                                 userInfo.put("introduction", "default");
                                 userInfo.put("school", "default");
                                 userInfo.put("additionalProfileImageUrl", "default");
@@ -209,6 +231,53 @@ public class CreateAccountActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    private String getLocation() {
+        if (ActivityCompat.checkSelfPermission(CreateAccountActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(CreateAccountActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // text.setText("This application requires location access. Please grant location access.");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        } else {
+            Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            Location locationNetwork = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            Location locationPassive = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+            if (locationGPS != null) {
+                location = String.format("(" + latitude + "," + longitude + ")", locationGPS.getLatitude(), locationGPS.getLongitude());
+                //System.out.println(location);
+            }
+            if (locationNetwork != null) {
+                location = String.format("(" + latitude + "," + longitude + ")", locationNetwork.getLatitude(), locationNetwork.getLongitude());
+            }
+            if (locationPassive != null) {
+                location = String.format("(" + latitude + "," + longitude + ")", locationPassive.getLatitude(), locationPassive.getLongitude());
+            } else {
+                // Snackbar.make(location, "Unable to trace your location, please try again.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, getResources().getInteger(R.integer.update_time), getResources().getInteger(R.integer.update_distance), v -> {
+                });
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, getResources().getInteger(R.integer.update_time), getResources().getInteger(R.integer.update_distance), v -> {
+                });
+            }
+        }
+        return location;
+    }
+
+
+    protected void noGpsMessage() {
+        final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setMessage("Please turn on your GPS connection")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override
