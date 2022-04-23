@@ -342,13 +342,6 @@ public class Swip extends AppCompatActivity {
                                 oppositeUserSex = "Male";
                                 break;
                         }
-//                        userNeed = dataSnapshot.child("need").getValue().toString();
-//                        userGive = dataSnapshot.child("give").getValue().toString();
-                        //  Log.d("CardSearch", "datachange called");
-
-//                        oppositeUserGive = userNeed;
-//                        oppositeUserNeed = userGive;
-//                        getOppositeSexUsers(oppositeUserGive, oppositeUserNeed);
                         getOppositeSexUsers();
                     }
                 }
@@ -377,49 +370,6 @@ public class Swip extends AppCompatActivity {
                         arrayAdapter.notifyDataSetChanged();
                     }
                 }
-//                if (dataSnapshot.exists() && !dataSnapshot.getKey().equals(currentUId)) {
-//                    //Log.d("CardSearch", "getOppositeSex called");
-//
-//                    if (dataSnapshot.child("gender").exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yeps").hasChild(currentUId) && !dataSnapshot.child("gender").getValue().toString().equals(currentUserSex)) {
-//                        String userImageUrl = "default";
-//                        if (!dataSnapshot.child("userImageUrl").getValue().equals("default")) {
-//                            userImageUrl = dataSnapshot.child("userImageUrl").getValue().toString();
-//                        }
-//                        Card item = new Card(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), userImageUrl);
-//                        rowItems.add(item);
-//                        arrayAdapter.notifyDataSetChanged();
-//                    }
-
-//                    if (dataSnapshot.child("give").exists() && dataSnapshot.child("need").exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yeps").hasChild(currentUId) && dataSnapshot.child("give").getValue().toString().equals(oppositeUserGive) && dataSnapshot.child("need").getValue().toString().equals(oppositeUserNeed)) {
-//                        String userImageUrl = "default";
-//                        if (!dataSnapshot.child("userImageUrl").getValue().equals("default")) {
-//                            userImageUrl = dataSnapshot.child("userImageUrl").getValue().toString();
-//                        }
-//                        Card item = new Card(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), userImageUrl, dataSnapshot.child("need").getValue().toString(), dataSnapshot.child("give").getValue().toString(), dataSnapshot.child("budget").getValue().toString());
-//                        rowItems.add(item);
-//                        arrayAdapter.notifyDataSetChanged();
-//                    }
-//                    else if( dataSnapshot.child("give").exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yeps").hasChild(currentUId) && dataSnapshot.child("give").getValue().toString().equals(oppositeUserGive)){
-//                        String userImageUrl = "default";
-//                        if (!dataSnapshot.child("userImageUrl").getValue().equals("default")) {
-//                            userImageUrl = dataSnapshot.child("userImageUrl").getValue().toString();
-//                        }
-//                        Card item = new Card(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), userImageUrl, dataSnapshot.child("need").getValue().toString(), dataSnapshot.child("give").getValue().toString(),  dataSnapshot.child("budget").getValue().toString());
-//                        rowItems.add(item);
-//                        arrayAdapter.notifyDataSetChanged();
-//                    }
-//                    else if( dataSnapshot.child("need").exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yeps").hasChild(currentUId) && dataSnapshot.child("need").getValue().toString().equals(oppositeUserNeed)){
-//                        String userImageUrl = "default";
-//                        if (!dataSnapshot.child("userImageUrl").getValue().equals("default")) {
-//                            userImageUrl = dataSnapshot.child("userImageUrl").getValue().toString();
-//                        }
-//                        Card item = new Card(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), userImageUrl, dataSnapshot.child("need").getValue().toString(), dataSnapshot.child("give").getValue().toString(),  dataSnapshot.child("budget").getValue().toString());
-//                        rowItems.add(item);
-//                        arrayAdapter.notifyDataSetChanged();
-//                    }
-
-                //spinner.setVisibility(View.GONE);
-
 
                 //Display a banner when no cards are available to display
                 TextView tv = (TextView)findViewById(R.id.noCardsBanner);
@@ -459,25 +409,6 @@ public class Swip extends AppCompatActivity {
         Menu menu = tvNB.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_ITEM);
         menuItem.setChecked(true);
-//        Log.d("", "setupTopNavigationView: setting up TopNavigationView");
-//        BottomNavigationViewEx tvEx = findViewById(R.id.topNavBar);
-//        TopNavigationBar.logTopNav(tvEx);
-//        TopNavigationBar.setupTopBar(Swip.this, tvEx);
-//        Menu menu = tvEx.getMenu();
-//        MenuItem menuItem = menu.getItem(1);
-//        menuItem.setChecked(true);
-//        //show tool tip
-//        View profile_view = findViewById(R.id.ic_profile);
-//        View matches_view = findViewById(R.id.ic_matched);
-//
-//        if (firstStart) {
-//            showToolTip_profile(new ViewPosition(profile_view));
-//            //showToolTip_matches(new ViewPosition(matches_view));
-//        }
-//        SharedPreferences newPref = getSharedPreferences("prefs", MODE_PRIVATE);
-//        SharedPreferences.Editor editor = newPref.edit();
-//        editor.putBoolean("firstStart", false);
-//        editor.apply();
     }
 
     @Override
@@ -486,37 +417,4 @@ public class Swip extends AppCompatActivity {
         finish();
         return;
     }
-
-//    public  class NotificationOpenedHandler implements OneSignal.NotificationOpenedHandler {
-//        private Context mContext;
-//        public NotificationOpenedHandler(Context context) {
-//            mContext = context;
-//        }
-//        @Override
-//        public void notificationOpened(OSNotificationOpenResult result)
-//        {
-//            OSNotificationAction.ActionType actionType = result.action.type;
-//            JSONObject data = result.notification.payload.additionalData;
-//            String activityToBeOpened;
-//            String activity;
-//
-//            if (data != null)
-//            {
-//                activityToBeOpened = data.optString("activityToBeOpened", null);
-//                if (activityToBeOpened != null && activityToBeOpened.equals("MatchesActivity"))
-//                {
-//                    try {
-//                        Intent intent3 = new Intent(getApplicationContext(), SettingsActivity.class);
-//                        intent3.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//                        Log.i("OneSignal", "customkey set with value: " + activityToBeOpened);
-//                        mContext.startActivity(intent3);
-//                    }
-//                    catch (Throwable t){
-//                        t.printStackTrace();
-//                    }
-//                }
-//            }
-//        }
-//    }
 }

@@ -49,8 +49,6 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mChatAdapter;
     private RecyclerView.LayoutManager mChatLayoutManager;
-
-    private TextView schoolText, storyText;
     private EditText mSendEditText;
     private ImageButton mBack;
     private ImageButton mSendButton;
@@ -75,7 +73,7 @@ public class ChatActivity extends AppCompatActivity {
         //chat id of the current match
         mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID).child("connections").child("matches").child(matchId).child("ChatId");
 
-        mDatabaseMatch = FirebaseDatabase.getInstance().getReference().child("Users").child(matchId).child("profileImageUrl");
+        mDatabaseMatch = FirebaseDatabase.getInstance().getReference().child("Users").child(matchId);
 
         //reference to all the chats
         mDatabaseChat = FirebaseDatabase.getInstance().getReference().child("Chat");
@@ -186,7 +184,7 @@ public class ChatActivity extends AppCompatActivity {
                             // Send notification to the opposite user if he is not on the chat
 
 
-                            new Notification(text, "New message from: " + currentUserName, notification, "activityToBeOpened", "MatchesActivity");
+                            new Notification(text, "New message from: " + currentUserName, notification, "activityToBeOpened", "MatchActivity");
                         }
                         else {
                             // Mark that the chat has been read and remove notification dot
@@ -415,7 +413,9 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
-                    matchIcon = dataSnapshot.getValue().toString();
+                    matchIcon = dataSnapshot.child("userImageUrl").getValue().toString();
+                    matchSchool = dataSnapshot.child("school").getValue().toString();
+                    matchStory = dataSnapshot.child("introduction").getValue().toString();
                 }
             }
 

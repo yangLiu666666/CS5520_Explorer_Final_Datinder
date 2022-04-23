@@ -38,18 +38,14 @@ public class MatchActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mMatchesAdapter;
     private RecyclerView.LayoutManager mMatchesLayoutManager;
-    private ImageButton mBack;
-    private DatabaseReference current;
-    private ValueEventListener listen;
     private HashMap<String, Integer> mList = new HashMap<>();
     private String currentUserID, mLastTimeStamp, mLastMessage, lastSeen;
-    DatabaseReference mCurrUserIdInsideMatchConnections, mCheckLastSeen;
+    DatabaseReference mCurrUserIdInsideMatchConnections;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
-//        mBack = findViewById(R.id.matchesBack);
         currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -60,15 +56,6 @@ public class MatchActivity extends AppCompatActivity {
         mMatchesAdapter = new MatchAdapter(getDataSetMatches(), MatchActivity.this);
         mRecyclerView.setAdapter(mMatchesAdapter);
 
-//        mBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MatchActivity.this, MainActivity.class);
-//                startActivity(intent);
-//                finish();
-//                return;
-//            }
-//        });
         setUpTopNavigationBar();
         getUserMatchId();
         mLastMessage = mLastTimeStamp = lastSeen = "";
@@ -155,12 +142,8 @@ public class MatchActivity extends AppCompatActivity {
                     if(dataSnapshot.child("name").getValue()!=null){
                         name = dataSnapshot.child("name").getValue().toString();
                     }
-//                    if(dataSnapshot.child("userImageUrl").getValue()!=null){
-//                        userImageUrl = dataSnapshot.child("userImageUrl").getValue().toString();
-//                    }
-
-                    if(dataSnapshot.child("profileImageUrl").getValue()!=null){
-                        userImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
+                    if(dataSnapshot.child("userImageUrl").getValue()!=null){
+                        userImageUrl = dataSnapshot.child("userImageUrl").getValue().toString();
                     }
 
                     String milliSec = mLastTimeStamp;
@@ -185,10 +168,6 @@ public class MatchActivity extends AppCompatActivity {
                     }
                     mMatchesAdapter.notifyDataSetChanged();
 
-
-//                    mLastMessage = "";
-//                    mLastTimeStamp = "";
-//                    lastSeen = "";
                 }
             }
 

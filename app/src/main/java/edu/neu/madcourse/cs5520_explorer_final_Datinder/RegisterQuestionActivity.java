@@ -63,14 +63,14 @@ public class RegisterQuestionActivity extends AppCompatActivity {
 
         spinner = findViewById(R.id.profile_bar);
         spinner.setVisibility(View.GONE);
-        //back = findViewById(R.id.settingsBack);
+
         userName = findViewById(R.id.profile_name);
         userStory = findViewById(R.id.story);
         userSchool = findViewById(R.id.school_name);
         userImage = findViewById(R.id.user_image);
         confirm = findViewById(R.id.confirm);
         gender = findViewById(R.id.gender_radio_group);
-//        likeGender = findViewById(R.id.date_gender);
+
 
         mAuth = FirebaseAuth.getInstance();
         if(mAuth != null && mAuth.getCurrentUser()!= null)
@@ -102,38 +102,13 @@ public class RegisterQuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveUserInformation();
-                Intent intent = new Intent(RegisterQuestionActivity.this, MatchScreenActivity.class);
+                Intent intent = new Intent(RegisterQuestionActivity.this, Swip.class);
                 startActivity(intent);
                 finish();
                 return;
             }
         });
-
-//        back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                spinner.setVisibility(View.VISIBLE);
-//                Intent intent = new Intent(RegisterQuestionActivity.this, MatchScreenActivity.class);
-//                startActivity(intent);
-//                finish();
-//                spinner.setVisibility(View.GONE);
-//                return;
-//            }
-//        });
-//
-//        //toolbar
-//        Toolbar toolbar = findViewById(R.id.settingsToolbar);
-//        setSupportActionBar(toolbar);
-
     }
-
-//    //shows options for menu toolbar
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.settings_menu, menu);
-//        return true;
-//    }
 
     public boolean checkPermission() {
         int result = ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE);
@@ -181,14 +156,7 @@ public class RegisterQuestionActivity extends AppCompatActivity {
                         schoolInfo = map.get("school").toString();
                     }
 
-//                    if(map.get("likeGender")!=null){
-//                        likeGenderInfo = map.get("likeGender").toString();
-//                    }
 
-
-                    //https://guides.codepath.com/android/Displaying-Images-with-the-Glide-Library
-
-                    //Glide.clear(userImage);
                     if(map.get("userImageUrl")!=null){
                         userImageUrl = map.get("userImageUrl").toString();
                         switch(userImageUrl){

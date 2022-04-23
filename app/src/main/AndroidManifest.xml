@@ -47,9 +47,6 @@
             android:name=".SwipLike"
             android:exported="false" />
         <activity
-            android:name=".MatchScreenActivity"
-            android:exported="false" />
-        <activity
             android:name=".RegisterQuestionActivity"
             android:exported="false" />
         <activity

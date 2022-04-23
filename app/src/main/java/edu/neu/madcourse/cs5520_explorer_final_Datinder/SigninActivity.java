@@ -90,7 +90,7 @@ public class SigninActivity extends AppCompatActivity {
                 //uncomment this for production
                 if (user !=null && !loginBtnClicked){
                     spinner.setVisibility(View.VISIBLE);
-                    Intent intent = new Intent(SigninActivity.this, MatchScreenActivity.class);
+                    Intent intent = new Intent(SigninActivity.this, Swip.class);
                     startActivity(intent);
                     finish();
                     spinner.setVisibility(View.GONE);
@@ -101,12 +101,6 @@ public class SigninActivity extends AppCompatActivity {
         };
 
     }
-
-    //    private boolean isStringNull(String string) {
-//        Log.d(TAG, "isStringNull: checking string if null.");
-//
-//        return string.equals("");
-//    }
 
     @Override
     protected void onStart() {

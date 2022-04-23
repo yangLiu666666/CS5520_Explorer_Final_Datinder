@@ -75,7 +75,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 spinner.setVisibility(View.VISIBLE);
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
-                    Intent intent = new Intent(CreateAccountActivity.this, MatchScreenActivity.class);
+                    Intent intent = new Intent(CreateAccountActivity.this, Swip.class);
                     startActivity(intent);
                     finish();
                     spinner.setVisibility(View.GONE);

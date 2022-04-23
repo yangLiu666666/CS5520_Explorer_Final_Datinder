@@ -51,8 +51,18 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchViewHolder>{
         else
             holder.mNotificationDot.setVisibility(View.INVISIBLE);
         holder.mLastTimeStamp.setText(matchesList.get(position).getLastTimeStamp());
-        if(matchesList.get(position).getIconUrl() != ""  && !matchesList.get(position).getIconUrl().equals("default")){
+        if(!matchesList.get(position).getIconUrl().equals("default")){
             Glide.with(context).load(matchesList.get(position).getIconUrl()).into(holder.mMatchImage);
+        }
+
+        switch(matchesList.get(position).getIconUrl()){
+            case "default":
+                Glide.with(context).load(R.drawable.empty_user_profile).into(holder.mMatchImage);
+                break;
+            default:
+                Glide.with(holder.mMatchImage).clear(holder.mMatchImage);
+                Glide.with(context).load(matchesList.get(position).getIconUrl()).into(holder.mMatchImage);
+                break;
         }
     }
 
