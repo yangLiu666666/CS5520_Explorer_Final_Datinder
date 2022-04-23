@@ -95,10 +95,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="30dp"
                     android:background="@color/white"
-                    android:gravity="bottom"
-                    app:passwordToggleEnabled="true">
+                    android:gravity="bottom">
 
                     <EditText
                         android:id="@+id/school_name"
@@ -110,8 +109,29 @@
                         android:padding="20dp"
                         android:textSize="18sp"
                         android:textStyle="italic" />
-
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <!--                <com.google.android.material.textfield.TextInputLayout-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="70dp"-->
+                <!--                    android:layout_marginTop="10dp"-->
+                <!--                    android:layout_marginBottom="15dp"-->
+                <!--                    android:background="@color/white"-->
+                <!--                    android:gravity="bottom"-->
+                <!--                    app:passwordToggleEnabled="true">-->
+
+                <!--                    <EditText-->
+                <!--                        android:id="@+id/school_name"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:background="@color/devider"-->
+                <!--                        android:hint="Please enter your school"-->
+                <!--                        android:inputType="text"-->
+                <!--                        android:padding="20dp"-->
+                <!--                        android:textSize="18sp"-->
+                <!--                        android:textStyle="italic" />-->
+
+                <!--                </com.google.android.material.textfield.TextInputLayout>-->
 
                 <TextView
                     android:layout_width="match_parent"
@@ -125,11 +145,10 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="30dp"
                     android:background="@color/white"
-                    android:gravity="bottom"
-                    app:passwordToggleEnabled="true">
+                    android:gravity="bottom">
 
                     <EditText
                         android:id="@+id/story"
@@ -141,8 +160,29 @@
                         android:padding="20dp"
                         android:textSize="18sp"
                         android:textStyle="italic" />
-
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <!--                <com.google.android.material.textfield.TextInputLayout-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="70dp"-->
+                <!--                    android:layout_marginTop="5dp"-->
+                <!--                    android:layout_marginBottom="5dp"-->
+                <!--                    android:background="@color/white"-->
+                <!--                    android:gravity="bottom"-->
+                <!--                    app:passwordToggleEnabled="true">-->
+
+                <!--                    <EditText-->
+                <!--                        android:id="@+id/story"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:background="@color/devider"-->
+                <!--                        android:hint="Please share your story"-->
+                <!--                        android:inputType="text"-->
+                <!--                        android:padding="20dp"-->
+                <!--                        android:textSize="18sp"-->
+                <!--                        android:textStyle="italic" />-->
+
+                <!--                </com.google.android.material.textfield.TextInputLayout>-->
 
 
                 <androidx.appcompat.widget.AppCompatButton
