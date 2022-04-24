@@ -273,7 +273,6 @@ public class EditProfileActivity extends AppCompatActivity {
      * update sharedPreferences
      */
     private void requestMultiplePermissions() {
-        for (String permission: permissionsRequired) {
             if (ActivityCompat.checkSelfPermission(EditProfileActivity.this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED
                     || ActivityCompat.checkSelfPermission(EditProfileActivity.this, permissionsRequired[1]) != PackageManager.PERMISSION_GRANTED
                     || ActivityCompat.checkSelfPermission(EditProfileActivity.this, permissionsRequired[2]) != PackageManager.PERMISSION_GRANTED) {
@@ -284,7 +283,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Permission already granted.", Toast.LENGTH_SHORT).show();
                 proceedAfterPermission();
             }
-        }
     }
 
     @Override
@@ -303,8 +301,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             }
             if (allgranted) {
-                Intent intent = new Intent(EditProfileActivity.this, EditProfileActivity.class);
-                startActivity(intent);
                 proceedAfterPermission();
             } else if (ActivityCompat.shouldShowRequestPermissionRationale(EditProfileActivity.this, permissionsRequired[0])
                     || ActivityCompat.shouldShowRequestPermissionRationale(EditProfileActivity.this, permissionsRequired[1])
@@ -328,14 +324,8 @@ public class EditProfileActivity extends AppCompatActivity {
             builder.setItems(menu, (DialogInterface dialog, int item) -> {
 
                 if (menu[item].equals("Take Photo")) {
-                    dialog.dismiss();
                     cameraIntent();
-
                 } else if (menu[item].equals("Choose from Gallery")) {
-//                    Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-//                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                    startActivityForResult(pickPhoto, 1);
-                    dialog.dismiss();
                     galleryIntent();
                 } else if (menu[item].equals("Cancel")) {
                     dialog.dismiss();
