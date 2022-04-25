@@ -369,13 +369,15 @@ public class EditProfileActivity extends AppCompatActivity {
         }
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_GALLERY) {
-//                resultUri = FileProvider.getUriForFile(this, AUTHORITY, output);
-                onSelectFromGalleryResult(data);
-            }
-            else if (requestCode == REQUEST_CAMERA) {
                 if (data != null) {
                     resultUri = data.getData();
                 }
+                onSelectFromGalleryResult(data);
+            }
+            else if (requestCode == REQUEST_CAMERA) {
+//                if (data != null) {
+//                    resultUri = data.getData();
+//                }
                 onCaptureImageResult(data);
             }
         }
