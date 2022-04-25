@@ -365,7 +365,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="@string/about_you"
+                        android:text="Edit your introduction"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -377,9 +377,20 @@
                         android:gravity="bottom"
                         android:hint="@string/about_you" />
 
+
+                    <Button
+                        android:id="@+id/saveIntroBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@color/colorPrimary"
+                        android:clickable="true"
+                        android:onClick="onClickSaveIntroInfo"
+                        android:text="Save"
+                        android:textColor="@color/white" />
+
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="2dp"
                         android:layout_marginTop="2dp"
                         android:background="@color/colorAccent" />
 
@@ -397,12 +408,23 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:gravity="bottom"
-                        android:hint="Add your school"
+                        android:hint="Edit your school"
+                        android:onClick="onClickSaveSchoolInfo"
                         android:padding="5dp" />
+
+                    <Button
+                        android:id="@+id/saveSchoolBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@color/colorPrimary"
+                        android:onClick="onClickSaveSchoolInfo"
+                        android:text="Save"
+                        android:clickable="true"
+                        android:textColor="@color/white" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="2dp"
                         android:layout_marginTop="2dp"
                         android:background="@color/colorAccent" />
 

@@ -405,7 +405,6 @@ public class EditProfileActivity extends AppCompatActivity {
 //        resultUri = Uri.fromFile(destination);
         imageView.setImageBitmap(bm);
         saveUserImageInformation(imageView);
-        saveUserTextInfo();
     }
 
     private void onSelectFromGalleryResult(Intent data) {
@@ -419,7 +418,6 @@ public class EditProfileActivity extends AppCompatActivity {
         }
         imageView.setImageBitmap(bm);
         saveUserImageInformation(imageView);
-        saveUserTextInfo();
     }
 
     private void showAlertDialog1() {
@@ -512,6 +510,18 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void onClickSaveIntroInfo(View view) {
+        introduction = selfIntroText.getText().toString();
+        userDatabase.child("introduction").setValue(introduction);
+        Toast.makeText(EditProfileActivity.this, "Saved successfully!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onClickSaveSchoolInfo(View view) {
+        school = schoolText.getText().toString();
+        userDatabase.child("school").setValue(school);
+        Toast.makeText(EditProfileActivity.this, "Saved successfully!", Toast.LENGTH_SHORT).show();
     }
 
     private void saveUserTextInfo() {
