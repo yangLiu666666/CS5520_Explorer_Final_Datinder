@@ -159,8 +159,8 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 userInfo.put("gender", genderInformation);
                                 userInfo.put("age", ageInfo);
                                 userInfo.put("location", locationInfo);
-                                userInfo.put("introduction", "default");
-                                userInfo.put("school", "default");
+                                userInfo.put("introduction", null);
+                                userInfo.put("school", null);
                                 userInfo.put("additionalProfileImageUrl", "default");
                                 currentUserDb.updateChildren(userInfo);
 

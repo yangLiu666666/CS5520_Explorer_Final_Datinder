@@ -200,7 +200,8 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         saveUserTextInfo();
-        super.onBackPressed();
+        Intent intentA = new Intent(EditProfileActivity.this, ProfileActivity.class);
+        startActivity(intentA);
     }
 
 

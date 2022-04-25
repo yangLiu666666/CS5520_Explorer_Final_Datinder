@@ -190,7 +190,6 @@ public class ProfileActivity extends AppCompatActivity {
         if(requestCode == 1 && resultCode == Activity.RESULT_OK){
             final Uri imageUri = data.getData();
             resultUri = imageUri;
-            circleImageView.setImageURI(resultUri);
             showAlertDialogToSaveImage();
         }
     }
