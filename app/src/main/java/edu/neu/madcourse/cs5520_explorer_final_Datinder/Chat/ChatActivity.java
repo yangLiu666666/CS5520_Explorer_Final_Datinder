@@ -174,21 +174,19 @@ public class ChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     if(dataSnapshot.child("onChat").exists()){
-                        Log.d("seen",dataSnapshot.child("onChat").getValue().toString() + " " +  message + " ");
-                        if(dataSnapshot.child("notificationKey").exists())
+                        Log.d("bugSeen",dataSnapshot.child("onChat").getValue().toString() + " " +  message + " ");
+                        if(dataSnapshot.child("notificationKey").exists()) {
                             notification = dataSnapshot.child("notificationKey").getValue().toString();
+                        }
                         else
                             notification = "";
 
                         if (!dataSnapshot.child("onChat").getValue().toString().equals(currentUserID)) {
                             // Send notification to the opposite user if he is not on the chat
-
-
                             new Notification(text, "New message from: " + currentUserName, notification, "activityToBeOpened", "MatchActivity");
                         }
                         else {
                             // Mark that the chat has been read and remove notification dot
-
                             DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID).child("connections").child("matches").child(matchId);
                             Map seenInfo = new HashMap();
                             seenInfo.put("lastSend", "false");

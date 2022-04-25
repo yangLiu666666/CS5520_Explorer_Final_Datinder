@@ -3,6 +3,7 @@ package edu.neu.madcourse.cs5520_explorer_final_Datinder.Matches;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,7 +49,7 @@ public class MatchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_match);
         currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewMatch);
         mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setHasFixedSize(true);
         mMatchesLayoutManager = new LinearLayoutManager(MatchActivity.this);
@@ -77,6 +78,7 @@ public class MatchActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // lastSeen is actually lastsend and is true if other user sent me a message and I have not read it yet.
+
                 if (dataSnapshot.exists()){
                     if(dataSnapshot.child("lastMessage").getValue() != null && dataSnapshot.child("lastTimeStamp").getValue() != null && dataSnapshot.child("lastSend").getValue() != null) {
                         mLastMessage = dataSnapshot.child("lastMessage").getValue().toString();
@@ -155,8 +157,8 @@ public class MatchActivity extends AppCompatActivity {
                         String[] arrOfStr = lastTimeStamp.split(",");
                         mLastTimeStamp = arrOfStr[0];
                     } catch (Exception e) {}
-
-                    Match obj = new Match(userId, name, userImageUrl, mLastMessage, mLastTimeStamp, chatid, lastSeen);
+                    Log.d("LastSeen", lastSeen);
+                    Match obj = new Match(userId, name, userImageUrl, mLastMessage, mLastTimeStamp, lastSeen, chatid);
                     if(mList.containsKey(chatid)){
                         int key = mList.get(chatid);
                         resultsMatches.set(resultsMatches.size() - key, obj);

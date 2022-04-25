@@ -43,11 +43,12 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchViewHolder>{
         holder.mLastMessage.setText(matchesList.get(position).getLastMessage());
         String lastSeen = "";
         lastSeen  = matchesList.get(position).getLastSeen();
-//        Log.d("matches", lastSeen);
+        Log.d("matches", lastSeen);
 
         // lastSeen actually works as lastSend. if lastSend is true (other person has send a message), then make dot visible.
-        if(lastSeen.equals("true"))
+        if(lastSeen.equals("true")){
             holder.mNotificationDot.setVisibility(View.VISIBLE);
+        }
         else
             holder.mNotificationDot.setVisibility(View.INVISIBLE);
         holder.mLastTimeStamp.setText(matchesList.get(position).getLastTimeStamp());

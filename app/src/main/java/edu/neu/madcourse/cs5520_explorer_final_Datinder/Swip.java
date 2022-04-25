@@ -1,7 +1,6 @@
 package edu.neu.madcourse.cs5520_explorer_final_Datinder;
 
 import android.content.Intent;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
-
+import com.onesignal.OSDeviceState;
+import com.onesignal.OneSignal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,19 +88,11 @@ public class Swip extends AppCompatActivity {
             return;
         }
 
-//        OneSignal.startInit(this)
-//                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-//                // .setNotificationOpenedHandler(new NotificationOpenedHandler(this))
-//                .unsubscribeWhenNotificationsAreDisabled(true)
-//                .init();
-//        OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
-//            @Override
-//            public void idsAvailable(String userId, String registrationId) {
-//                usersDb.child(currentUId).child("notificationKey").setValue(userId);
-//            }
-//        });
-
-        Log.d(tag, "onCreate " + currentUId);
+        OneSignal.initWithContext(this);
+        OneSignal.setAppId("2f0a752f-ba5a-4ce0-9a92-ff0a1582f864");
+        OSDeviceState deviceState = OneSignal.getDeviceState();
+        String userId = deviceState != null ? deviceState.getUserId() : null;
+        usersDb.child(currentUId).child("notificationKey").setValue(userId);
 
         checkUserSex();
 
@@ -297,7 +289,7 @@ public class Swip extends AppCompatActivity {
                                 if(snapshot.exists()) {
                                     notification = snapshot.getValue().toString();
                                     Log.d("sendChat", notification);
-//                                    new SendNotification("You have a new match!", "", notification, null, null );
+                                    new Notification("You have a new match!", "", notification, null, null );
                                 }
                             }
                             @Override

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,8 +17,8 @@
             android:layout_height="70dp"
             android:layout_margin="5dp"
             android:src="@drawable/empty_user_profile"
-            app:civ_border_width="1dp"
             app:civ_border_color="@color/colorPrimary"
+            app:civ_border_width="1dp"
             tools:ignore="MissingClass" />
 
         <LinearLayout
@@ -28,13 +29,13 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_height="30dp"
                     android:orientation="horizontal"
-                    android:weightSum="2" >
+                    android:weightSum="2">
 
                     <TextView
                         android:id="@+id/MatchName"
@@ -48,11 +49,12 @@
 
                     <TextView
                         android:id="@+id/lastTimeStamp"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:gravity="right"
+                        android:textColor="@color/grey"
                         android:text="TimeStamp"
                         android:textSize="14sp" />
 
@@ -75,53 +77,60 @@
                     android:layout_weight="0.7"
                     android:text="Last Message"
                     android:textSize="14sp"
+                    android:textColor="@color/grey"
 
                     />
 
                 <ImageView
                     android:id="@+id/notification_dot"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="0.3"
+                    android:src="@drawable/message"
+                    android:gravity="right"
                     android:visibility="invisible" />
             </LinearLayout>
 
         </LinearLayout>
 
         <TextView
+            android:id="@+id/Matchid"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="invisible"
-            android:id="@+id/Matchid"/>
+            android:visibility="invisible" />
+
         <TextView
+            android:id="@+id/needid"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="invisible"
-            android:id="@+id/needid"/>
+            android:visibility="invisible" />
+
         <TextView
+            android:id="@+id/giveid"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="invisible"
-            android:id="@+id/giveid"/>
+            android:visibility="invisible" />
+
         <TextView
+            android:id="@+id/budgetid"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="invisible"
-            android:id="@+id/budgetid"/>
+            android:visibility="invisible" />
+
         <TextView
+            android:id="@+id/profileid"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="invisible"
-            android:id="@+id/profileid"/>
+            android:visibility="invisible" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:alpha="128"
+        android:layout_marginLeft="2dp"
         android:layout_marginTop="1dp"
         android:layout_marginRight="2dp"
-        android:layout_marginLeft="2dp"
-        android:background="@color/grey"/>
+        android:alpha="128"
+        android:background="@color/grey" />
 
 </LinearLayout>
