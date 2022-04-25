@@ -136,9 +136,9 @@
                                         android:id="@+id/image_view_2"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:tag="imageview2"
                                         android:onClick="onClickUploadProfilePhoto"
-                                        android:scaleType="fitXY" />
+                                        android:scaleType="fitXY"
+                                        android:tag="imageview2" />
 
                                     <LinearLayout
                                         android:layout_width="wrap_content"
@@ -181,9 +181,9 @@
                                         android:id="@+id/image_view_3"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:tag="imageview3"
                                         android:onClick="onClickUploadProfilePhoto"
-                                        android:scaleType="fitXY" />
+                                        android:scaleType="fitXY"
+                                        android:tag="imageview3" />
 
                                     <LinearLayout
                                         android:layout_width="wrap_content"
@@ -235,9 +235,9 @@
                                     android:id="@+id/image_view_4"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:tag="imageview4"
                                     android:onClick="onClickUploadProfilePhoto"
-                                    android:scaleType="fitXY" />
+                                    android:scaleType="fitXY"
+                                    android:tag="imageview4" />
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -284,8 +284,9 @@
                                     android:id="@+id/image_view_5"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:tag="imageview5"
-                                    android:scaleType="fitXY" />
+                                    android:onClick="onClickUploadProfilePhoto"
+                                    android:scaleType="fitXY"
+                                    android:tag="imageview5" />
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -329,9 +330,9 @@
                                     android:id="@+id/image_view_6"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:tag="imageview6"
                                     android:onClick="onClickUploadProfilePhoto"
-                                    android:scaleType="fitXY" />
+                                    android:scaleType="fitXY"
+                                    android:tag="imageview6" />
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"

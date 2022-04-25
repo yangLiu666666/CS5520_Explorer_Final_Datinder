@@ -2,12 +2,14 @@ package edu.neu.madcourse.cs5520_explorer_final_Datinder.Profile;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -24,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -46,6 +49,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.neu.madcourse.cs5520_explorer_final_Datinder.BuildConfig;
 import edu.neu.madcourse.cs5520_explorer_final_Datinder.R;
 
 @SuppressWarnings("ALL")
@@ -70,6 +74,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private String userId, additionalProfileImageUrl, additionalProfileImageUrlX, introduction, school, imageviewString;
     private EditText selfIntroText, schoolText;
     private Uri resultUri;
+    private File output=null;
+    private final static String AUTHORITY = BuildConfig.APPLICATION_ID+".provider";
 
 
 
@@ -228,15 +234,15 @@ public class EditProfileActivity extends AppCompatActivity {
                 requestMultiplePermissions();
                 break;
             case R.id.image_view_4:
-                imageView = imageView3;
+                imageView = imageView4;
                 requestMultiplePermissions();
                 break;
             case R.id.image_view_5:
-                imageView = imageView3;
+                imageView = imageView5;
                 requestMultiplePermissions();
                 break;
             case R.id.image_view_6:
-                imageView = imageView3;
+                imageView = imageView6;
                 requestMultiplePermissions();
                 break;
             case R.id.image_btn_1:
@@ -362,20 +368,26 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         }
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_GALLERY)
+            if (requestCode == REQUEST_GALLERY) {
+//                resultUri = FileProvider.getUriForFile(this, AUTHORITY, output);
                 onSelectFromGalleryResult(data);
-            else if (requestCode == REQUEST_CAMERA)
+            }
+            else if (requestCode == REQUEST_CAMERA) {
+                if (data != null) {
+                    resultUri = data.getData();
+                }
                 onCaptureImageResult(data);
+            }
         }
     }
 
     private void onCaptureImageResult(Intent data) {
-        final Uri imageUri = data.getData();
-        resultUri = imageUri;
         Bitmap bm = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
 
+        String path = MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(), bm, "Title", null);
+        resultUri = Uri.parse(path);
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
 
@@ -388,16 +400,15 @@ public class EditProfileActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+//        resultUri = Uri.fromFile(destination);
         imageView.setImageBitmap(bm);
         saveUserImageInformation(imageView);
+        saveUserTextInfo();
     }
 
     private void onSelectFromGalleryResult(Intent data) {
         Bitmap bm = null;
         if (data != null) {
-            final Uri imageUri = data.getData();
-            resultUri = imageUri;
             try {
                 bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
             } catch (IOException e) {
@@ -406,6 +417,7 @@ public class EditProfileActivity extends AppCompatActivity {
         }
         imageView.setImageBitmap(bm);
         saveUserImageInformation(imageView);
+        saveUserTextInfo();
     }
 
     private void showAlertDialog1() {
