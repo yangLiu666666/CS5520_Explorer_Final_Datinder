@@ -71,7 +71,13 @@ public class EditProfileActivity extends AppCompatActivity {
     private final static int REQUEST_GALLERY = 1;
 
     private FirebaseAuth mAuth;
-    private String userId, additionalProfileImageUrl, additionalProfileImageUrlX, introduction, school, imageviewString;
+    private String userId;
+    private TextView titleTag;
+    private String additionalProfileImageUrl;
+    private String additionalProfileImageUrlX;
+    private String introduction;
+    private String school;
+    private String imageviewString;
     private EditText selfIntroText, schoolText;
     private Uri resultUri;
     private File output=null;
@@ -95,6 +101,7 @@ public class EditProfileActivity extends AppCompatActivity {
         imageView5 = findViewById(R.id.image_view_5);
         imageView6 = findViewById(R.id.image_view_6);
         //default imageView to first one
+        titleTag = findViewById(R.id.title_tag);
         imageView = findViewById(R.id.image_view_1);
         man = findViewById(R.id.man_button);
         woman = findViewById(R.id.woman_button);
@@ -111,8 +118,42 @@ public class EditProfileActivity extends AppCompatActivity {
             userId = mAuth.getCurrentUser().getUid();
         }
         userDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
-
+        titleTag.setText("Profile");
         getUserInfo();
+
+        userDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
+                if (map.get("gender").toString().equals("Female")) {
+                    women_text.setTextColor(R.color.colorPrimary);
+                    woman.setBackgroundResource(R.drawable.ic_selected);
+                    man_text.setTextColor(R.color.black);
+                    man.setBackgroundResource(R.drawable.ic_unselected);
+                    nongender_text.setTextColor(R.color.black);
+                    nongender.setBackgroundResource(R.drawable.ic_unselected);
+                    userDatabase.child("gender").setValue("Female");
+                } else if (map.get("gender").toString().equals("Male")) {
+                    man_text.setTextColor(R.color.colorPrimary);
+                    man.setBackgroundResource(R.drawable.ic_selected);
+                    women_text.setTextColor(R.color.black);
+                    woman.setBackgroundResource(R.drawable.ic_unselected);
+                    nongender_text.setTextColor(R.color.black);
+                    nongender.setBackgroundResource(R.drawable.ic_unselected);
+                } else {
+                    nongender_text.setTextColor(R.color.colorPrimary);
+                    nongender.setBackgroundResource(R.drawable.ic_selected);
+                    man_text.setTextColor(R.color.black);
+                    man.setBackgroundResource(R.drawable.ic_unselected);
+                    women_text.setTextColor(R.color.black);
+                    woman.setBackgroundResource(R.drawable.ic_unselected);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
         //if click back imageButton => go back
         back.setOnClickListener(view -> {
@@ -128,6 +169,7 @@ public class EditProfileActivity extends AppCompatActivity {
             man.setBackgroundResource(R.drawable.ic_unselected);
             nongender_text.setTextColor(R.color.black);
             nongender.setBackgroundResource(R.drawable.ic_unselected);
+            userDatabase.child("gender").setValue("Female");
         });
 
         man.setOnClickListener(v -> {
@@ -138,6 +180,7 @@ public class EditProfileActivity extends AppCompatActivity {
             woman.setBackgroundResource(R.drawable.ic_unselected);
             nongender_text.setTextColor(R.color.black);
             nongender.setBackgroundResource(R.drawable.ic_unselected);
+            userDatabase.child("gender").setValue("Male");
         });
 
         nongender.setOnClickListener(view -> {
@@ -148,6 +191,7 @@ public class EditProfileActivity extends AppCompatActivity {
             man.setBackgroundResource(R.drawable.ic_unselected);
             women_text.setTextColor(R.color.black);
             woman.setBackgroundResource(R.drawable.ic_unselected);
+            userDatabase.child("gender").setValue("Not to say");
         });
 
         imageView1.setOnLongClickListener(new View.OnLongClickListener() {
